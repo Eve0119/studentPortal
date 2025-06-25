@@ -2,7 +2,7 @@ import StudentModel from '../models/StudentModel.js'
 
 export async function getAllStudent(req, res){
     try {
-        const students = await StudentModel.find()
+        const students = await StudentModel.find().sort({createdAt: -1}) //newest first
         res.status(200).json(students)
     } catch (error) {
         console.error("Error in getAllStudent controller", error)
