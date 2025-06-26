@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Navbar from './components/Navbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import Students from './pages/Students.jsx'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/dashboard/:id' element={<Dashboard />} />
+        <Route path='/students' element={<Students />} />
       </Routes>
     </Sidebar>
   </div>
