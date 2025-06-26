@@ -1,6 +1,6 @@
 import StudentModel from '../models/StudentModel.js'
 
-export async function getAllStudent(req, res){
+export async function getAllStudent(_, res){
     try {
         const students = await StudentModel.find().sort({createdAt: -1}) //newest first
         res.status(200).json(students)

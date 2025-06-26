@@ -8,14 +8,14 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-connectDB();
-
 //middleware to access body and params of request
 app.use(express.json())
-
 app.use("/api/student", studentRoutes)
 
-app.listen(PORT, () => {
-    console.log("Server is running on port:", PORT)
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("Server is running on port:", PORT)
 })
+})
+
 
