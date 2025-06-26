@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard.jsx'
 
 const App = () => {
   return (
-    <div>
+    <div data-theme='lemonade'>
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/dashboard/:id' element={<Dashboard/>}/>
