@@ -1,4 +1,4 @@
-function getAge(dateOfBirth) {
+export function getAge(dateOfBirth) {
   if (!dateOfBirth) return '-'
   const dob = new Date(dateOfBirth)
   const today = new Date()
@@ -10,4 +10,10 @@ function getAge(dateOfBirth) {
   return age
 }
 
-export default getAge
+export function formatDate(date){
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
