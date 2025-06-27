@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 pl-10 pr-10">
+    <div className="navbar bg-base-100 pl-10 pr-10 sticky top-0 z-50">
       {/* Sidebar toggle button */}
       <div className="flex-none">
         <label htmlFor="my-drawer" className="btn btn-square btn-ghost drawer-button">
