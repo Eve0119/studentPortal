@@ -11,6 +11,9 @@ const studentSchema = new mongoose.Schema({
     middleInitial: {
         type:String, required:true
     },
+    studentId: {
+        type:String, required:true
+    },
     dateOfBirth: {
         type:Date, required:true
     },
