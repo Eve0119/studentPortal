@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import axiosInstance from '../lib/axios'
 import { IoIosAdd } from "react-icons/io";
-
 import StudentTable from '../components/studentPage/StudentTable';
 
 const Students = () => {
@@ -76,7 +75,15 @@ const Students = () => {
           </span>
         </button>
       </div>
-      <StudentTable gradeFilter={gradeFilter} isLoading={isLoading} filteredStudents={filteredStudents}/>
+      <StudentTable
+        genderFilter={genderFilter}
+        gradeFilter={gradeFilter} 
+        isLoading={isLoading} 
+        filteredStudents={filteredStudents}
+        setGenderFilter={setGenderFilter}
+        setGradeFilter={setGradeFilter}
+        setSearch={setSearch}
+      />
     </div>
   )
 }
