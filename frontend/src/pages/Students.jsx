@@ -58,7 +58,7 @@ const Students = () => {
 
   return (
     <div>
-      <div className='flex justify-between m-10 mt-1'>
+      <div className='flex justify-between m-10 mt-1 mb-5'>
         <div>
           <div>
             <span className='text-primary-content font-bold text-3xl '>Students</span>
@@ -76,7 +76,7 @@ const Students = () => {
           </span>
         </button>
       </div>
-      <div className='bg-white min-w-fit min-h-fit m-2 md:m-10 p-4 md:p-10 rounded-xl md:rounded-2xl border border-base-200'>
+      <div className='bg-white min-w-fit min-h-fit m-2 md:m-10 md:mt-5 md:mt p-4 md:p-10 md:pt-5 rounded-xl md:rounded-2xl border border-base-200'>
         <div >
           <span className='justify-start text-primary-content font-semibold text-xl md:text-2xl'>
             Student Directory

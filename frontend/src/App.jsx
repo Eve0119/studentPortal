@@ -2,8 +2,8 @@ import React from 'react'
 import {Routes, Route} from 'react-router'
 import HomePage from './pages/HomePage.jsx'
 import Dashboard from './pages/Dashboard.jsx'
-import Navbar from './components/Navbar.jsx'
-import Sidebar from './components/Sidebar.jsx'
+import Navbar from './components/navigation/Navbar.jsx'
+import Sidebar from './components/navigation/Sidebar.jsx'
 import Students from './pages/Students.jsx'
 
 const App = () => {
