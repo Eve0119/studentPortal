@@ -13,7 +13,7 @@ const StudentTable = ({
   setGenderFilter 
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   
   // Calculate current items
   const indexOfLastItem = currentPage * itemsPerPage;
