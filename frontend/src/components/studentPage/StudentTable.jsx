@@ -176,41 +176,54 @@ const StudentTable = ({
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="flex justify-between items-center mt-4 px-2 py-2">
-                <div className="text-sm text-gray-600">
-                  Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredStudents.length)} of {filteredStudents.length} students
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-2 mt-4 px-2 py-2">
+                <div className="text-sm text-gray-600 whitespace-nowrap">
+                  Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredStudents.length)} of {filteredStudents.length}
                 </div>
-                <div className="join">
+                
+                <div className="join flex-wrap justify-center">
                   <button 
                     onClick={() => setCurrentPage(1)} 
                     disabled={currentPage === 1}
                     className="join-item btn btn-sm"
+                    aria-label="First page"
                   >
-                    ««
+                    <span className="hidden sm:inline">««</span>
+                    <span className="sm:hidden">First</span>
                   </button>
+                  
                   <button 
                     onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
                     className="join-item btn btn-sm"
+                    aria-label="Previous page"
                   >
-                    «
+                    <span className="hidden sm:inline">«</span>
+                    <span className="sm:hidden">Prev</span>
                   </button>
-                  <button className="join-item btn btn-sm">
+                  
+                  <div className="join-item px-3 flex items-center text-sm">
                     Page {currentPage} of {totalPages}
-                  </button>
+                  </div>
+                  
                   <button
                     onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
                     className="join-item btn btn-sm"
+                    aria-label="Next page"
                   >
-                    »
+                    <span className="hidden sm:inline">»</span>
+                    <span className="sm:hidden">Next</span>
                   </button>
+                  
                   <button 
                     onClick={() => setCurrentPage(totalPages)}
                     disabled={currentPage === totalPages}
                     className="join-item btn btn-sm"
+                    aria-label="Last page"
                   >
-                    »»
+                    <span className="hidden sm:inline">»»</span>
+                    <span className="sm:hidden">Last</span>
                   </button>
                 </div>
               </div>

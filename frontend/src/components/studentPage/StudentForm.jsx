@@ -16,7 +16,7 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
   return (
     <div>
         <dialog ref={dialogRef} id='studentModal1' className="modal modal-middle ">
-        <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
+        <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[60vw]">
             <div className='flex justify-between align-top pt-0 pr-0'>
                 <span className='text-2xl text-primary-content font-bold'>Add New Student</span>
                 <button className="btn btn-circle btn-ghost btn-xs" onClick={() => {setIsStudentFormOpen(false)}}>
@@ -35,6 +35,32 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
                 </div>
                 <div>
                     <span className='text-neutral-content text-base'>Basic information about the student</span>
+                </div>
+                <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                    <div className="h-full">
+                    <label className="form-control w-full h-full flex flex-col">
+                        <div className="label">
+                        <span className="text-base font-semibold">First Name *</span>
+                        </div>
+                        <input 
+                        type="text" 
+                        placeholder="Enter first name" 
+                        className="input input-bordered w-full" 
+                        />
+                    </label>
+                    </div>
+                    <div className="h-full">
+                    <label className="form-control w-full h-full flex flex-col">
+                        <div className="label">
+                        <span className="text-base font-semibold">Last Name *</span>
+                        </div>
+                        <input 
+                        type="text" 
+                        placeholder="Enter last name" 
+                        className="input input-bordered w-full" 
+                        />
+                    </label>
+                    </div>
                 </div>
                 <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
                     <div className="h-full">

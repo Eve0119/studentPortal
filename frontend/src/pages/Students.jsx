@@ -17,10 +17,9 @@ const Students = () => {
       const fetchStudents = async () => {
         try {
           const res = await axiosInstance.get('/student')
-          console.log(res.data)
           setStudents(res.data)
         } catch (error) {
-          console.log("Error fetching students", error)
+          console.error("Error fetching students", error)
           toast.error("Failed to fetch students. Please try again later")
         } finally {
           setIsLoading(false)
@@ -30,57 +29,50 @@ const Students = () => {
     },[])
 
     const filteredStudents = students.filter((task) => {
-      const matchesSearch = task.firstName
-        .toLowerCase()
-        .includes(search.toLowerCase())
-        ||
-        task.lastName
-        .toLowerCase()
-        .includes(search.toLowerCase())
-        ||
-        task.middleInitial
-        .toLowerCase()
-        .includes(search.toLowerCase())
-        ||
-        task.studentId
-        .toLowerCase()
-        .includes(search.toLowerCase())
+      const matchesSearch = task.firstName.toLowerCase().includes(search.toLowerCase()) ||
+                           task.lastName.toLowerCase().includes(search.toLowerCase()) ||
+                           task.middleInitial.toLowerCase().includes(search.toLowerCase()) ||
+                           task.studentId.toLowerCase().includes(search.toLowerCase())
 
-      const matchesGradeFilter =
-        gradeFilter.trim() === '' ||
-        task.grade.trim().toLowerCase() === gradeFilter.trim().toLowerCase();
+      const matchesGradeFilter = gradeFilter.trim() === '' ||
+                               task.grade.trim().toLowerCase() === gradeFilter.trim().toLowerCase();
 
-      const matchesGenderFilter =
-        genderFilter.trim() === '' ||
-        task.gender.trim().toLowerCase() === genderFilter.trim().toLowerCase();
+      const matchesGenderFilter = genderFilter.trim() === '' ||
+                                task.gender.trim().toLowerCase() === genderFilter.trim().toLowerCase();
       
       return matchesSearch && matchesGradeFilter && matchesGenderFilter
     })
 
   return (
     <div>
-      <div className='flex justify-between m-10 mt-1 mb-5'>
+      {/* Responsive Header Section */}
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 m-4 md:mr-10 md:ml-10 mt-1 mb-5'>
         <div>
-          <div>
-            <span className='text-primary-content font-bold text-3xl '>Students</span>
-          </div>
-          <div>
-            <span className='text-secondary-content text-base md:text-base'>
-              Manage student records and information
-            </span>
-          </div>
+          <h1 className='text-primary-content font-bold text-xl md:text-2xl lg:text-3xl'>
+            Students
+          </h1>
+          <p className='text-secondary-content text-sm md:text-base'>
+            Manage student records and information
+          </p>
         </div>
-        <button className="btn btn-primary" onClick={() => setIsStudentFormOpen(true)}>
-          <IoIosAdd className='text-base-100 text-2xl'/>
-          <span className='text-base-100'>
+        
+        {/* Responsive Button */}
+        <button 
+          className="btn btn-primary btn-sm md:btn-md whitespace-nowrap"
+          onClick={() => setIsStudentFormOpen(true)}
+        >
+          <IoIosAdd className='text-base-100 text-lg md:text-xl'/>
+          <span className='text-base-100 text-xs md:text-sm'>
             Add New Student
           </span>
         </button>
       </div>
+
       <StudentForm 
         isStudentFormOpen={isStudentFormOpen}
         setIsStudentFormOpen={setIsStudentFormOpen}
       />
+      
       <StudentTable
         genderFilter={genderFilter}
         gradeFilter={gradeFilter} 
