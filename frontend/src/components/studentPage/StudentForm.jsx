@@ -36,56 +36,71 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
                 <div>
                     <span className='text-neutral-content text-base'>Basic information about the student</span>
                 </div>
-                <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
-                    <div className="h-full">
-                    <label className="form-control w-full h-full flex flex-col">
-                        <div className="label">
-                        <span className="text-base font-semibold">First Name *</span>
-                        </div>
+                <div className='mt-4 grid grid-cols-1 md:grid-cols-5 gap-x-4 items-start'>
+                    <div className="h-full md:col-span-2">
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">Last Name *</span>
+                            </div>
                         <input 
-                        type="text" 
-                        placeholder="Enter first name" 
-                        className="input input-bordered w-full" 
+                            type="text" 
+                            placeholder="Enter last name" 
+                            className="input input-bordered w-full"
+                            required
                         />
-                    </label>
+                        </label>
+                    </div>
+                    <div className="h-full md:col-span-2">
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">First Name *</span>
+                            </div>
+                        <input 
+                            type="text" 
+                            placeholder="Enter first name" 
+                            className="input input-bordered w-full"
+                            required
+                        />
+                        </label>
                     </div>
                     <div className="h-full">
-                    <label className="form-control w-full h-full flex flex-col">
-                        <div className="label">
-                        <span className="text-base font-semibold">Last Name *</span>
-                        </div>
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">M.I.</span>
+                            </div>
                         <input 
-                        type="text" 
-                        placeholder="Enter last name" 
-                        className="input input-bordered w-full" 
+                            type="text" 
+                            placeholder="Initial" 
+                            className="input input-bordered w-full max-w-[80px]"
+                            maxLength="1"
                         />
-                    </label>
+                        </label>
                     </div>
                 </div>
                 <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
                     <div className="h-full">
-                    <label className="form-control w-full h-full flex flex-col">
-                        <div className="label">
-                        <span className="text-base font-semibold">First Name *</span>
-                        </div>
-                        <input 
-                        type="text" 
-                        placeholder="Enter first name" 
-                        className="input input-bordered w-full" 
-                        />
-                    </label>
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">Date of Birth *</span>
+                            </div>
+                            <input 
+                            type="date" 
+                            className="input input-bordered w-full"
+                            required 
+                            />
+                        </label>
                     </div>
                     <div className="h-full">
-                    <label className="form-control w-full h-full flex flex-col">
-                        <div className="label">
-                        <span className="text-base font-semibold">Last Name *</span>
-                        </div>
-                        <input 
-                        type="text" 
-                        placeholder="Enter last name" 
-                        className="input input-bordered w-full" 
-                        />
-                    </label>
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">Gender *</span>
+                            </div>
+                            <select className="select select-bordered w-full max-w-xs" required>
+                                <option disabled selected>Select Gender</option>
+                                <option value='male'>Male</option>
+                                <option value='female'>Female</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
             </div>
