@@ -16,7 +16,7 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
   return (
     <div>
         <dialog ref={dialogRef} id='studentModal1' className="modal modal-middle ">
-        <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[60vw]">
+        <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
             <div className='flex justify-between align-top pt-0 pr-0'>
                 <span className='text-2xl text-primary-content font-bold'>Add New Student</span>
                 <button className="btn btn-circle btn-ghost btn-xs" onClick={() => {setIsStudentFormOpen(false)}}>
@@ -71,7 +71,7 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
                         <input 
                             type="text" 
                             placeholder="Initial" 
-                            className="input input-bordered w-full max-w-[80px]"
+                            className="input input-bordered w-full "
                             maxLength="1"
                         />
                         </label>
@@ -95,11 +95,44 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen}) => {
                             <div className="label">
                                 <span className="text-base font-semibold">Gender *</span>
                             </div>
-                            <select className="select select-bordered w-full max-w-xs" required>
+                            <select className="select select-bordered w-full " required>
                                 <option disabled selected>Select Gender</option>
                                 <option value='male'>Male</option>
                                 <option value='female'>Female</option>
                             </select>
+                        </label>
+                    </div>
+                </div>
+                <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                    <div className="h-full">
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">Grade Level *</span>
+                            </div>
+                            <select className='select select-bordered w-full' required>
+                                <option disabled selected>Select grade level</option>
+                                <option value="pre-k">Pre-K</option>
+                                <option value="kindergarten">Kindergarten</option>
+                                <option value="grade 1">Grade 1</option>
+                                <option value="grade 2">Grade 2</option>
+                                <option value="grade 3">Grade 3</option>
+                                <option value="grade 4">Grade 4</option>
+                                <option value="grade 5">Grade 5</option>
+                                <option value="grade 6">Grade 6</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div className="h-full">
+                        <label className="form-control w-full h-full flex flex-col">
+                            <div className="label">
+                                <span className="text-base font-semibold">Student Number *</span>
+                            </div>
+                            <input 
+                            type="text"
+                            className='input input-bordered w-full'
+                            required
+                            placeholder='Enter student number'
+                            />
                         </label>
                     </div>
                 </div>
