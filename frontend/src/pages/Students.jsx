@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import axiosInstance from '../lib/axios'
 import { IoIosAdd } from "react-icons/io";
 import StudentTable from '../components/studentPage/StudentTable';
+import StudentForm from '../components/studentPage/StudentForm';
 
 const Students = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -10,6 +11,7 @@ const Students = () => {
     const [search, setSearch] = useState('')
     const [gradeFilter, setGradeFilter] = useState('')
     const [genderFilter, setGenderFilter] = useState('')
+    const [isStudentFormOpen, setIsStudentFormOpen] = useState(false)
 
     useEffect(() => {
       const fetchStudents = async () => {
@@ -68,13 +70,17 @@ const Students = () => {
             </span>
           </div>
         </div>
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() => setIsStudentFormOpen(true)}>
           <IoIosAdd className='text-base-100 text-2xl'/>
           <span className='text-base-100'>
             Add New Student
           </span>
         </button>
       </div>
+      <StudentForm 
+        isStudentFormOpen={isStudentFormOpen}
+        setIsStudentFormOpen={setIsStudentFormOpen}
+      />
       <StudentTable
         genderFilter={genderFilter}
         gradeFilter={gradeFilter} 
