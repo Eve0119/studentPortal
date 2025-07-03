@@ -43,6 +43,22 @@ const Students = () => {
       return matchesSearch && matchesGradeFilter && matchesGenderFilter
     })
 
+    const handleSubmitStudentForm = async (formData) => {
+        try {
+            const response = await axiosInstance.post('/student', formData);
+            toast.success('Student added successfully!');
+            setIsStudentFormOpen(false);
+            
+            // Refresh student list
+            const res = await axiosInstance.get('/student');
+            setStudents(res.data);
+            
+        } catch (error) {
+            toast.error('Failed to add student');
+            console.error("Submission error:", error);
+        }
+    };
+
   return (
     <div>
       {/* Responsive Header Section */}
@@ -67,12 +83,11 @@ const Students = () => {
           </span>
         </button>
       </div>
-
       <StudentForm 
         isStudentFormOpen={isStudentFormOpen}
         setIsStudentFormOpen={setIsStudentFormOpen}
+        handleSubmitStudentForm={handleSubmitStudentForm}
       />
-      
       <StudentTable
         genderFilter={genderFilter}
         gradeFilter={gradeFilter} 
