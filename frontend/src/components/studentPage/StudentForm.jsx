@@ -350,7 +350,9 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
                     </div>
                 </div>
                 <div className='grid gap-x-4 grid-cols-2 mt-4 justify-center'>
-                    <button className='btn btn-primary' type='submit'>Save Student</button>
+                    <button className='btn btn-primary' type='submit'>
+                        <span className='text-white'>Save Student</span>
+                    </button>
                     <button className='btn' type="button" onClick={(e) => {e.preventDefault(); setFormData(initialFormState); setIsStudentFormOpen(false);}}>Cancel</button>
                 </div>
             </form>           
