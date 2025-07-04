@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { getAge, formatDate } from '../../lib/utils';
 import { FaMale, FaFemale, FaCloudDownloadAlt } from "react-icons/fa";
 import { IoIosMore } from "react-icons/io";
+import { getAge, formatDate, exportToExcel } from '../../lib/utils';
 
 const StudentTable = ({ 
   genderFilter, 
@@ -13,6 +13,7 @@ const StudentTable = ({
   setGenderFilter 
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isExporting, setIsExporting] = useState(false)
   const itemsPerPage = 5;
   
   // Calculate current items
@@ -20,6 +21,19 @@ const StudentTable = ({
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredStudents.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
+  
+  const handleExport = async () => {
+  try {
+    setIsExporting(true);
+    const fileName = `students_${new Date().toISOString().split('T')[0]}.xlsx`;
+    await exportToExcel(filteredStudents, fileName);
+  } catch (error) {
+    console.error('Export failed:', error);
+    alert('Export failed. Please try again.');
+  } finally {
+    setIsExporting(false);
+  }
+};
 
   return (
     <div className='bg-white min-w-fit min-h-fit m-2 md:m-10 md:mt-5 p-4 md:p-10 md:pt-5 rounded-xl md:rounded-2xl border border-base-200 pb-0'>
@@ -89,9 +103,19 @@ const StudentTable = ({
           </select>
 
           {/* Export Button */}
-          <button className="btn btn-outline btn-primary w-full sm:w-auto">
-            <span className="hidden sm:inline">Export</span>
-            <FaCloudDownloadAlt className='text-xl sm:ml-2'/>
+          <button 
+            className="btn btn-outline btn-primary w-full sm:w-auto"
+            onClick={handleExport}
+            disabled={currentItems.length === 0 || isExporting}
+          >
+            {isExporting ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              <>
+                <span className="hidden sm:inline">Export</span>
+                <FaCloudDownloadAlt className='text-xl sm:ml-2'/>
+              </>
+            )}
           </button>
         </div>
       </div>
