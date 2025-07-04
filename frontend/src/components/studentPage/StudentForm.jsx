@@ -42,23 +42,23 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
             }
         }));
     };
-    const dialogRef = useRef(null);
+    const studentFormRef = useRef(null);
     useEffect(() => {
         if (isStudentFormOpen) {
-        dialogRef.current?.showModal();
+        studentFormRef.current?.showModal();
         } else {
-        dialogRef.current?.close();
+        studentFormRef.current?.close();
         }
     }, [isStudentFormOpen]);
     useEffect(() => {
     if (!isStudentFormOpen) {
         setFormData(initialFormState);
     }
-}, [isStudentFormOpen]);
+    }, [isStudentFormOpen]);
     
   return (
     <div>
-        <dialog ref={dialogRef} id='studentModal1' className="modal modal-middle ">
+        <dialog ref={studentFormRef} id='studentModal1' className="modal modal-middle ">
         <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
             <div className='flex justify-between align-top pt-0 pr-0'>
                 <span className='text-2xl text-primary-content font-bold'>Add New Student</span>

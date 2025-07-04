@@ -4,6 +4,7 @@ import axiosInstance from '../lib/axios'
 import { IoIosAdd } from "react-icons/io";
 import StudentTable from '../components/studentPage/StudentTable';
 import StudentForm from '../components/studentPage/StudentForm';
+import StudentProfile from '../components/studentPage/StudentProfile';
 
 const Students = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -12,6 +13,7 @@ const Students = () => {
     const [gradeFilter, setGradeFilter] = useState('')
     const [genderFilter, setGenderFilter] = useState('')
     const [isStudentFormOpen, setIsStudentFormOpen] = useState(false)
+    const [isStudentProfileOpen, setIsStudentProfileOpen] = useState(false)
 
     useEffect(() => {
       const fetchStudents = async () => {
@@ -83,6 +85,10 @@ const Students = () => {
           </span>
         </button>
       </div>
+      <StudentProfile 
+        isStudentProfileOpen={isStudentProfileOpen}
+        setIsStudentProfileOpen={setIsStudentProfileOpen}
+      />
       <StudentForm 
         isStudentFormOpen={isStudentFormOpen}
         setIsStudentFormOpen={setIsStudentFormOpen}
@@ -96,6 +102,7 @@ const Students = () => {
         setGenderFilter={setGenderFilter}
         setGradeFilter={setGradeFilter}
         setSearch={setSearch}
+        setIsStudentProfileOpen={setIsStudentProfileOpen}
       />
     </div>
   )

@@ -10,7 +10,8 @@ const StudentTable = ({
   filteredStudents, 
   setGradeFilter, 
   setSearch, 
-  setGenderFilter 
+  setGenderFilter,
+  setIsStudentProfileOpen 
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isExporting, setIsExporting] = useState(false)
@@ -143,8 +144,8 @@ const StudentTable = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.map((student, idx) => (
-                    <tr key={student.id || idx} className="border-t last:border-b border-base-200 hover:bg-base-200">
+                  {currentItems.map((student) => (
+                    <tr key={student._id} className="border-t last:border-b border-base-200 hover:bg-base-200">
                       <td className="flex items-center gap-2 md:gap-4 px-2 py-2">
                         <div>
                           <div className="font-bold text-primary text-base md:text-lg">{student.lastName}</div>
@@ -180,10 +181,10 @@ const StudentTable = ({
                       </td>
                       <td className="px-2 py-2">
                         <div className='dropdown dropdown-hover dropdown-bottom dropdown-end'>
-                          <button className="btn btn-circle btn-sm btn-ghost text-primary">
+                          <button className="btn btn-circle btn-sm btn-ghost text-primary" >
                             <IoIosMore fontSize={18} />
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                              <li><a>View Profile</a></li>
+                              <li onClick={() => {setIsStudentProfileOpen(true)}}><a>View Profile</a></li>
                               <li><a>Edit Student</a></li>
                               <li><a>View Grades</a></li>
                               <li><a>View Attendance</a></li>
