@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 import axiosInstance from '../../lib/axios';
 import { capitalizeWords, copyToClipboard, getAge} from '../../lib/utils';
 
@@ -43,7 +44,7 @@ const StudentProfile = ({
     return (
         <div>
             <dialog ref={studentProfileRef} className="modal">
-                <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[80vw]">
+                <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw]">
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="text-xl md:text-2xl font-semibold">
@@ -75,13 +76,23 @@ const StudentProfile = ({
                         </div>
                     ) : student ? (
                         <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
-                            <div>
-                                <span className='text-2xl font-semibold text-primary-content'>{student.firstName} {student.lastName}</span>
+                            <div className='flex justify-between items-start'>
+                                <div>
+                                    <div>
+                                        <span className='text-2xl font-semibold text-primary-content'>{student.firstName} {student.lastName}</span>
+                                    </div>
+                                    <div>
+                                        <span className='text-base text-secondary'>{capitalizeWords(student.grade)}</span>
+                                    </div>
+                                </div>
+                                <div className='gap-1'>
+                                    <button className='btn btn-sm btn-outline rounded-lg border-neutral-content'>
+                                        <FaRegEdit />
+                                        Edit
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <span className='text-base text-secondary'>{capitalizeWords(student.grade)}</span>
-                            </div>
-                            <div className='mt-2'>
+                            <div className='mt-4'>
                                 <span className='text-primary'>Student ID:  </span>
                                 <span className='text-base text-primary-content'> {student.studentId}</span>
                                 <button onClick={() => {copyToClipboard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
