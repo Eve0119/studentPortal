@@ -48,11 +48,12 @@ export function capitalizeWords(str) {
   return str.replace(/\b\w/g, char => char.toUpperCase());
 }
 
-export const copyToClipBoard = async (text) => {
+export const copyToClipboard = async (text) => {
   try {
     await navigator.clipboard.writeText(text)
     toast.success("Copied to clipboard")
   } catch (error) {
-    
+    console.error("Error in copyToClipboard function: ", error)
+    toast.error("Error copying to clipboard")
   }
 }

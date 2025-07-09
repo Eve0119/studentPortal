@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
 import axiosInstance from '../../lib/axios';
-import { capitalizeWords, copyToClipBoard, getAge} from '../../lib/utils';
+import { capitalizeWords, copyToClipboard, getAge} from '../../lib/utils';
 
 const StudentProfile = ({
     isStudentProfileOpen, 
@@ -84,7 +84,7 @@ const StudentProfile = ({
                             <div className='mt-2'>
                                 <span className='text-primary'>Student ID:  </span>
                                 <span className='text-base text-primary-content'> {student.studentId}</span>
-                                <button onClick={() => {copyToClipBoard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
+                                <button onClick={() => {copyToClipboard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
                                     <MdContentCopy className='text-primary'/>
                                 </button>
                             </div>
