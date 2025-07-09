@@ -86,7 +86,7 @@ const StudentProfile = ({
                                     </div>
                                 </div>
                                 <div className='gap-1'>
-                                    <button className='btn btn-sm btn-outline rounded-lg border-neutral-content'>
+                                    <button className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white'>
                                         <FaRegEdit />
                                         Edit
                                     </button>
