@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import axiosInstance from '../../lib/axios';
 import toast from 'react-hot-toast';
+import { MdContentCopy } from "react-icons/md";
+import axiosInstance from '../../lib/axios';
+import { capitalizeWords, copyToClipBoard, getAge} from '../../lib/utils';
 
 const StudentProfile = ({
     isStudentProfileOpen, 
@@ -51,7 +53,7 @@ const StudentProfile = ({
                                 {isLoading 
                                     ? 'Loading student information...'
                                     : student 
-                                        ? <span className='text-secondary-content'>`Viewing {student.firstName} ${student.lastName}'s profile`</span>
+                                        ? <span className='text-secondary-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
                                         : 'Student information not available'}
                             </p>
                         </div>
@@ -72,18 +74,23 @@ const StudentProfile = ({
                             Failed to load student data
                         </div>
                     ) : student ? (
-                        <div className="mt-6 space-y-4">
-                            {/* Student details here */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <h3 className="font-bold">Full Name</h3>
-                                    <p>{student.firstName} {student.lastName}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold">Student ID</h3>
-                                    <p>{student.studentId}</p>
-                                </div>
-                                {/* Add more student details as needed */}
+                        <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
+                            <div>
+                                <span className='text-2xl font-semibold text-primary-content'>{student.firstName} {student.lastName}</span>
+                            </div>
+                            <div>
+                                <span className='text-base text-secondary'>{capitalizeWords(student.grade)}</span>
+                            </div>
+                            <div className='mt-2'>
+                                <span className='text-primary'>Student ID:  </span>
+                                <span className='text-base text-primary-content'> {student.studentId}</span>
+                                <button onClick={() => {copyToClipBoard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
+                                    <MdContentCopy className='text-primary'/>
+                                </button>
+                            </div>
+                            <div>
+                                <span className='text-primary'>Age: </span>
+                                <span className='text-base text-primary-content'> {getAge(student.dateOfBirth)}</span>
                             </div>
                         </div>
                     ) : (
