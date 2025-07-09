@@ -14,6 +14,7 @@ const Students = () => {
     const [genderFilter, setGenderFilter] = useState('')
     const [isStudentFormOpen, setIsStudentFormOpen] = useState(false)
     const [isStudentProfileOpen, setIsStudentProfileOpen] = useState(false)
+    const [studentId, setStudentId] = useState('')
 
     useEffect(() => {
       const fetchStudents = async () => {
@@ -88,6 +89,7 @@ const Students = () => {
       <StudentProfile 
         isStudentProfileOpen={isStudentProfileOpen}
         setIsStudentProfileOpen={setIsStudentProfileOpen}
+        studentId={studentId}
       />
       <StudentForm 
         isStudentFormOpen={isStudentFormOpen}
@@ -103,6 +105,7 @@ const Students = () => {
         setGradeFilter={setGradeFilter}
         setSearch={setSearch}
         setIsStudentProfileOpen={setIsStudentProfileOpen}
+        setStudentId={setStudentId}
       />
     </div>
   )
