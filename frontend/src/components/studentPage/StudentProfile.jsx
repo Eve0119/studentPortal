@@ -47,14 +47,14 @@ const StudentProfile = ({
                 <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw]">
                     <div className="flex justify-between items-start">
                         <div>
-                            <h2 className="text-xl md:text-2xl font-semibold">
+                            <h2 className="text-xl md:text-2xl font-bold text-primary-content">
                                 Student Profile
                             </h2>
                             <p className="text-sm md:text-base">
                                 {isLoading 
                                     ? 'Loading student information...'
                                     : student 
-                                        ? <span className='text-secondary-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
+                                        ? <span className='text-neutral-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
                                         : 'Student information not available'}
                             </p>
                         </div>
@@ -75,35 +75,50 @@ const StudentProfile = ({
                             Failed to load student data
                         </div>
                     ) : student ? (
-                        <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
-                            <div className='flex justify-between items-start'>
-                                <div>
+                        <>
+                            <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                <div className='flex justify-between items-start'>
                                     <div>
-                                        <span className='text-2xl font-semibold text-primary-content'>{student.firstName} {student.lastName}</span>
+                                        <div>
+                                            <span className='text-3xl font-semibold text-primary-content'>{student.firstName} {student.lastName}</span>
+                                        </div>
+                                        <div>
+                                            <span className='text-xl text-secondary'>{capitalizeWords(student.grade)}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span className='text-base text-secondary'>{capitalizeWords(student.grade)}</span>
+                                    <div className='gap-1'>
+                                        <button className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white'>
+                                            <FaRegEdit />
+                                            Edit
+                                        </button>
                                     </div>
                                 </div>
-                                <div className='gap-1'>
-                                    <button className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white'>
-                                        <FaRegEdit />
-                                        Edit
-                                    </button>
+                                <div className='grid grid-cols-10 mt-4'>
+                                    <div className='col-span-1'>
+                                        <span className='text-primary pr-2'>Student ID:  </span>
+                                    </div>
+                                    <div className='col-span-9 justify-start'>
+                                        <span className='text-base text-primary-content'> {student.studentId}</span>
+                                        <button onClick={() => {copyToClipboard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
+                                            <MdContentCopy className='text-primary'/>
+                                        </button>
+                                    </div>
+                                    <div className='col-span-1'>
+                                        <span className='text-primary pr-2'>Age: </span>
+                                    </div>
+                                    <div className='col-span-9 justify-start'>
+                                        <span className='text-base text-primary-content'> {getAge(student.dateOfBirth)}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className='mt-4'>
-                                <span className='text-primary'>Student ID:  </span>
-                                <span className='text-base text-primary-content'> {student.studentId}</span>
-                                <button onClick={() => {copyToClipboard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
-                                    <MdContentCopy className='text-primary'/>
-                                </button>
+                            <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                <div className='flex gap-2'>
+                                    <span className='text-2xl text-primary-content font-semibold'>
+                                        Personal Information
+                                    </span>
+                                </div>
                             </div>
-                            <div>
-                                <span className='text-primary'>Age: </span>
-                                <span className='text-base text-primary-content'> {getAge(student.dateOfBirth)}</span>
-                            </div>
-                        </div>
+                        </>
                     ) : (
                         <div className="mt-4 text-center">
                             No student data found
