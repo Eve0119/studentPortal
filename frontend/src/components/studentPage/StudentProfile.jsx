@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { IoPersonOutline } from "react-icons/io5";
 import axiosInstance from '../../lib/axios';
-import { capitalizeWords, copyToClipboard, getAge} from '../../lib/utils';
+import { capitalizeWords, copyToClipboard, getAge, formatDate} from '../../lib/utils';
 
 const StudentProfile = ({
     isStudentProfileOpen, 
@@ -76,7 +77,7 @@ const StudentProfile = ({
                         </div>
                     ) : student ? (
                         <>
-                            <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
+                            <div className="mt-5 p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
                                 <div className='flex justify-between items-start'>
                                     <div>
                                         <div>
@@ -111,11 +112,37 @@ const StudentProfile = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-5 p-5 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                <div className='flex gap-2'>
-                                    <span className='text-2xl text-primary-content font-semibold'>
-                                        Personal Information
-                                    </span>
+                            <div className='grid grid-cols-2'>
+                                <div className=" col-span-1 mt-5 p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                    <div className='flex gap-2'>
+                                        <IoPersonOutline className='text-primary text-2xl mt-1'/>
+                                        <span className='text-2xl text-primary-content font-semibold'>
+                                            Personal Information
+                                        </span>
+                                    </div>
+                                    <div className='grid grid-cols-2 gap-4 justify-start mt-5'>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>First Name</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg'>{student.firstName}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Last Name</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg'>{student.lastName}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Date of Birth</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg'>{formatDate(new Date(student.dateOfBirth))}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+
                                 </div>
                             </div>
                         </>
