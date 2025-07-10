@@ -99,6 +99,7 @@ const Students = () => {
       <StudentTable
         genderFilter={genderFilter}
         gradeFilter={gradeFilter} 
+        search={search}
         isLoading={isLoading} 
         filteredStudents={filteredStudents}
         setGenderFilter={setGenderFilter}

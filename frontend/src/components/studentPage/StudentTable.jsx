@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaMale, FaFemale, FaCloudDownloadAlt } from "react-icons/fa";
 import { IoIosMore } from "react-icons/io";
 import { getAge, formatDate, exportToExcel } from '../../lib/utils';
@@ -6,6 +6,7 @@ import { getAge, formatDate, exportToExcel } from '../../lib/utils';
 const StudentTable = ({ 
   genderFilter, 
   gradeFilter, 
+  search,
   isLoading, 
   filteredStudents, 
   setGradeFilter, 
@@ -23,6 +24,10 @@ const StudentTable = ({
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredStudents.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [gradeFilter, genderFilter, search])
   
   const handleExport = async () => {
   try {
