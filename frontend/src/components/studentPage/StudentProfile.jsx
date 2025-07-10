@@ -139,6 +139,12 @@ const StudentProfile = ({
                                                 <span className='text-primary-content text-lg'>{formatDate(new Date(student.dateOfBirth))}</span>
                                             </div>
                                         </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Gender</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg'>{capitalizeWords(student.gender)}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
