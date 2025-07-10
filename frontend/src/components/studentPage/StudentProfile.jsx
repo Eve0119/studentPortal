@@ -145,6 +145,12 @@ const StudentProfile = ({
                                                 <span className='text-primary-content text-lg'>{capitalizeWords(student.gender)}</span>
                                             </div>
                                         </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Contact Number</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg'>{student.contactNumber || 'Not provided'}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
