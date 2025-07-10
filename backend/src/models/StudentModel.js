@@ -25,6 +25,7 @@ const studentSchema = new mongoose.Schema({
     },
     address: {
         street: { type: String, required: true },
+        barangay: {type: String, required: true},
         city: { type: String, required: true },
         zip: { type: String, required: false}
     },
@@ -42,9 +43,13 @@ const studentSchema = new mongoose.Schema({
     },
     enrollmentDate: {
         type: Date, required: true
+    },
+    grades: {
+        generalAverage: { type: String, required: false },
+    },
+    attendance: {
+        attendanceRate: {type:Number, required: false}
     }
-
-
 },{
     timestamps:true
 })

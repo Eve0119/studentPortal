@@ -271,11 +271,11 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
                     <div>
                         <span className='text-neutral-content text-base'>Present location of where the student resides</span>
                     </div>
-                    <div className='mt-4 grid grid-cols-1 md:grid-cols-1 gap-x-4 items-start'>
+                    <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
                         <div className="h-full md:col-span-1">
                             <label className="form-control w-full h-full flex flex-col">
                                 <div className="label">
-                                    <span className="text-base font-semibold">Street Address *</span>
+                                    <span className="text-base font-semibold">Street *</span>
                                 </div>
                             <input 
                                 type="text" 
@@ -284,6 +284,22 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
                                 required
                                 name='street'
                                 value={formData.address.street}
+                                onChange={handleAddressChange} 
+                            />
+                            </label>
+                        </div>
+                        <div className="h-full md:col-span-1">
+                            <label className="form-control w-full h-full flex flex-col">
+                                <div className="label">
+                                    <span className="text-base font-semibold">Barangay *</span>
+                                </div>
+                            <input 
+                                type="text" 
+                                placeholder="Barangay" 
+                                className="input input-bordered w-full"
+                                required
+                                name='barangay'
+                                value={formData.address.barangay}
                                 onChange={handleAddressChange} 
                             />
                             </label>
