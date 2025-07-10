@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import { MdContentCopy } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { IoPersonOutline } from "react-icons/io5";
+import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { HiOutlineAcademicCap } from "react-icons/hi2";
+import { RiParentLine } from "react-icons/ri";
 import axiosInstance from '../../lib/axios';
 import { capitalizeWords, copyToClipboard, getAge, formatDate} from '../../lib/utils';
 
@@ -46,19 +47,21 @@ const StudentProfile = ({
     return (
         <div>
             <dialog ref={studentProfileRef} className="modal">
-                <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw]">
-                    <div className="flex justify-between items-start">
-                        <div>
+                <div className="modal-box !max-w-none !pt-0 w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw]">
+                    <div className="flex justify-between items-start sticky top-0 z-10 bg-base-100 pt-4 pb-2 -mx-4 px-4">
+                        <div className='flex justify-start flex-col'>
                             <h2 className="text-xl md:text-2xl font-bold text-primary-content">
                                 Student Profile
                             </h2>
-                            <p className="text-sm md:text-base">
-                                {isLoading 
-                                    ? 'Loading student information...'
-                                    : student 
-                                        ? <span className='text-neutral-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
-                                        : 'Student information not available'}
-                            </p>
+                            <div>
+                                <p className="text-sm md:text-base">
+                                    {isLoading 
+                                        ? 'Loading student information...'
+                                        : student 
+                                            ? <span className='text-neutral-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
+                                            : 'Student information not available'}
+                                </p>
+                            </div>
                         </div>
                         <button 
                             className="btn btn-sm btn-circle btn-ghost"
@@ -102,7 +105,7 @@ const StudentProfile = ({
                                     <div className='col-span-9 justify-start'>
                                         <span className='text-base text-primary-content font-bold'> {student.studentId}</span>
                                         <button onClick={() => {copyToClipboard(student.studentId)}} className='btn btn-ghost btn-base btn-xs'>
-                                            <MdContentCopy className='text-primary'/>
+                                            <MdContentCopy className='text-neutral-700'/>
                                         </button>
                                     </div>
                                     <div className='col-span-1'>
@@ -171,46 +174,6 @@ const StudentProfile = ({
                                         <div>
                                             <span className='text-neutral font-medium text-sm'>General Average</span>
                                             <div>
-                                                <span className='text-primary-content text-lg font-bold'>{student.generalAverage || 'No grades yet'}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Enrollment Date</span>
-                                            <div>
-                                                <span className='text-primary-content text-lg font-bold'>{formatDate(new Date(student.enrollmentDate))}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Attendance Rate</span>
-                                            <div>
-                                                <span className='text-primary-content text-lg font-bold'>{student.attendanceRate || 'No attendace yet'}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Adviser</span>
-                                            <div>
-                                                <span className='text-primary-content text-lg font-bold'>{student.adviser || 'No adviser yet'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className=" col-span-1 p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                    <div className='flex gap-2'>
-                                        <HiOutlineAcademicCap className='text-primary text-2xl mt-1'/>
-                                        <span className='text-2xl text-primary-content font-semibold'>
-                                            Address
-                                        </span>
-                                    </div>
-                                    <div className='grid grid-cols-2 gap-4 justify-start mt-5'>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Grade Level</span>
-                                            <div>
-                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.grade)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>General Average</span>
-                                            <div>
                                                 <span className='text-primary-content text-lg font-bold'>{student.grades?.generalAverage || 'No grades yet'}</span>
                                             </div>
                                         </div>
@@ -230,6 +193,68 @@ const StudentProfile = ({
                                             <span className='text-neutral font-medium text-sm'>Adviser</span>
                                             <div>
                                                 <span className='text-primary-content text-lg font-bold'>{student.adviser || 'No adviser yet'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className=" col-span-1 p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                    <div className='flex gap-2'>
+                                        <IoLocationOutline className='text-primary text-2xl mt-1'/>
+                                        <span className='text-2xl text-primary-content font-semibold'>
+                                            Address
+                                        </span>
+                                    </div>
+                                    <div className='grid grid-cols-2 gap-4 justify-start mt-5'>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Street</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.address?.street)}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Barangay</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.address?.barangay)}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>City</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.address?.city)}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>ZIP Code</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.address?.zip || 'Not provided')}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className=" col-span-1 p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                    <div className='flex gap-2'>
+                                        <RiParentLine className='text-primary text-2xl mt-1'/>
+                                        <span className='text-2xl text-primary-content font-semibold'>
+                                            Parent/Guardian
+                                        </span>
+                                    </div>
+                                    <div className='grid grid-cols-2 gap-4 justify-start mt-5'>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Name</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.parentGuardianName)}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Contact Number</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.parentContactNumber)}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span className='text-neutral font-medium text-sm'>Email</span>
+                                            <div>
+                                                <span className='text-primary-content text-lg font-bold'>{capitalizeWords(student.parentEmail || 'Not provided')}</span>
                                             </div>
                                         </div>
                                     </div>
