@@ -49,6 +49,9 @@ const studentSchema = new mongoose.Schema({
     },
     attendance: {
         attendanceRate: {type:Number, required: false}
+    },
+    adviser: {
+        type: String, required: false
     }
 },{
     timestamps:true
