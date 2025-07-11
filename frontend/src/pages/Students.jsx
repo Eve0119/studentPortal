@@ -5,6 +5,7 @@ import { IoIosAdd } from "react-icons/io";
 import StudentTable from '../components/studentPage/StudentTable';
 import StudentForm from '../components/studentPage/StudentForm';
 import StudentProfile from '../components/studentPage/StudentProfile';
+import EditStudent from '../components/studentPage/EditStudent';
 
 const Students = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -14,6 +15,7 @@ const Students = () => {
     const [genderFilter, setGenderFilter] = useState('')
     const [isStudentFormOpen, setIsStudentFormOpen] = useState(false)
     const [isStudentProfileOpen, setIsStudentProfileOpen] = useState(false)
+    const [isEditStudentOpen, setIsEditStudentOpen] = useState(false)
     const [studentId, setStudentId] = useState('')
 
     useEffect(() => {
@@ -86,6 +88,10 @@ const Students = () => {
           </span>
         </button>
       </div>
+      <EditStudent 
+        isEditStudentOpen={isEditStudentOpen}
+        setIsEditStudentOpen={setIsEditStudentOpen}
+      />
       <StudentProfile 
         isStudentProfileOpen={isStudentProfileOpen}
         setIsStudentProfileOpen={setIsStudentProfileOpen}

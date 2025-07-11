@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import toast from 'react-hot-toast';
+
 
 export function getAge(dateOfBirth) {
   if (!dateOfBirth) return '-'
@@ -46,14 +46,4 @@ export const exportToExcel = (data, fileName = 'students.xlsx') => {
 
 export function capitalizeWords(str) {
   return str.replace(/\b\w/g, char => char.toUpperCase());
-}
-
-export const copyToClipboard = async (text) => {
-  try {
-    await navigator.clipboard.writeText(text)
-    toast.success("Copied to clipboard")
-  } catch (error) {
-    console.error("Error in copyToClipboard function: ", error)
-    toast.error("Error copying to clipboard")
-  }
 }
