@@ -10,6 +10,7 @@ import EditStudent from '../components/studentPage/EditStudent';
 const Students = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [students, setStudents] = useState([])
+    const [student, setStudent] = useState(null)
     const [search, setSearch] = useState('')
     const [gradeFilter, setGradeFilter] = useState('')
     const [genderFilter, setGenderFilter] = useState('')
@@ -91,11 +92,18 @@ const Students = () => {
       <EditStudent 
         isEditStudentOpen={isEditStudentOpen}
         setIsEditStudentOpen={setIsEditStudentOpen}
+        studentId={studentId}
+        student={student}
+        setStudent={setStudent}
       />
       <StudentProfile 
+        setIsEditStudentOpen={setIsEditStudentOpen}
         isStudentProfileOpen={isStudentProfileOpen}
         setIsStudentProfileOpen={setIsStudentProfileOpen}
         studentId={studentId}
+        setStudentId={setStudentId}
+        student={student}
+        setStudent={setStudent}
       />
       <StudentForm 
         isStudentFormOpen={isStudentFormOpen}
@@ -103,6 +111,7 @@ const Students = () => {
         handleSubmitStudentForm={handleSubmitStudentForm}
       />
       <StudentTable
+
         genderFilter={genderFilter}
         gradeFilter={gradeFilter} 
         search={search}
@@ -113,6 +122,7 @@ const Students = () => {
         setSearch={setSearch}
         setIsStudentProfileOpen={setIsStudentProfileOpen}
         setStudentId={setStudentId}
+        setIsEditStudentOpen={setIsEditStudentOpen}
       />
     </div>
   )
