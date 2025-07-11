@@ -5,17 +5,19 @@ import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { HiOutlineAcademicCap } from "react-icons/hi2";
 import { RiParentLine } from "react-icons/ri";
 import axiosInstance from '../../lib/axios';
-import { capitalizeWords, copyToClipboard, getAge, formatDate} from '../../lib/utils';
+import { capitalizeWords, getAge, formatDate} from '../../lib/utils';
 import CopyButton from '../ui/CopyButton';
 
 const StudentProfile = ({
     isStudentProfileOpen, 
     setIsStudentProfileOpen,
-    studentId
+    studentId,
+    setIsEditStudentOpen,
+    student,
+    setStudent
 }) => {
     const studentProfileRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [student, setStudent] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -92,7 +94,10 @@ const StudentProfile = ({
                                         </div>
                                     </div>
                                     <div className='w-full sm:w-auto'>
-                                        <button className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white w-full sm:w-auto'>
+                                        <button onClick={()=>{
+                                            setIsStudentProfileOpen(false);
+                                            setIsEditStudentOpen(true);
+                                        }} className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white w-full sm:w-auto'>
                                             <FaRegEdit />
                                             Edit
                                         </button>
