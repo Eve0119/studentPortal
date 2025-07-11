@@ -13,7 +13,8 @@ const StudentTable = ({
   setSearch, 
   setGenderFilter,
   setIsStudentProfileOpen,
-  setStudentId
+  setStudentId,
+  setIsEditStudentOpen
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isExporting, setIsExporting] = useState(false)
@@ -191,7 +192,7 @@ const StudentTable = ({
                             <IoIosMore fontSize={18} />
                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                               <li onClick={() => {setIsStudentProfileOpen(true); setStudentId(student._id)}}><a>View Profile</a></li>
-                              <li><a>Edit Student</a></li>
+                              <li onClick={() => {setIsEditStudentOpen(true); setStudentId(student._id)}}><a>Edit Student</a></li>
                               <li><a>View Grades</a></li>
                               <li><a>View Attendance</a></li>
                               <li><a className='text-orange-600'>Remove Student</a></li>
