@@ -160,7 +160,7 @@ const StudentProfile = ({
                                         </div>
                                     </div>
                                 </div>
-                                <div className="p-4 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
+                                <div className="p-4 mt-5 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
                                     <div className='flex gap-2'>
                                         <HiOutlineAcademicCap className='text-primary text-2xl mt-1'/>
                                         <span className='text-xl sm:text-2xl text-primary-content font-semibold'>
