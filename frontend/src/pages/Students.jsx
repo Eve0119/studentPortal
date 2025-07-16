@@ -90,11 +90,11 @@ const Students = () => {
         </button>
       </div>
       <EditStudent 
+        setStudent={setStudent}
+        student={student}
         isEditStudentOpen={isEditStudentOpen}
         setIsEditStudentOpen={setIsEditStudentOpen}
         studentId={studentId}
-        student={student}
-        setStudent={setStudent}
       />
       <StudentProfile 
         setIsEditStudentOpen={setIsEditStudentOpen}
