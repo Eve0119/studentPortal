@@ -82,7 +82,7 @@ const EditStudent = ({
     <div>
         <dialog ref={editStudentRef} className='modal'>
             <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
-                <div className="flex justify-between items-start sticky top-0 z-10 bg-base-100 pt-4 pb-2 -mx-4 px-4">
+                <div className="flex justify-between items-start top-0 z-10 bg-base-100 pt-0 align-top pb-2 -mx-4 px-4">
                     <div className='flex justify-start flex-col'>
                         <h2 className="text-xl md:text-2xl font-bold text-primary-content">
                             Edit Student Profile
@@ -238,6 +238,68 @@ const EditStudent = ({
                                         value={formData.studentId}
                                         onChange={handleChange}
                                         />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='mt-5 p-5 rounded-xl border border-neutral-content flex flex-col bg-white'>
+                            <div className='flex gap-2'>
+                                <RiParentLine className='text-accent text-2xl m-1'/>
+                                <span className='text-2xl text-primary-content font-semibold'>
+                                Parent/Guardian Information
+                                </span>
+                            </div>
+                            <div>
+                                <span className='text-neutral-content text-base'>Primary contact information for the student</span>
+                            </div>
+                            <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                                <div className="h-full md:col-span-1">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Parent/Guardian Name *</span>
+                                        </div>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter parent/guardian name" 
+                                        className="input input-bordered w-full"
+                                        required
+                                        name='parentGuardianName'
+                                        value={formData.parentGuardianName}
+                                        onChange={handleChange}
+                                    />
+                                    </label>
+                                </div>
+                                <div className="h-full md:col-span-1">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Parent/Guardian Email</span>
+                                        </div>
+                                    <input 
+                                        type="email" 
+                                        placeholder="parent@email.com" 
+                                        className="input input-bordered w-full"
+                                        name='parentEmail'
+                                        value={formData.parentEmail}
+                                        onChange={handleChange}
+                                    />
+                                    </label>
+                                </div>
+                            </div>
+                            <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                                <div className="h-full md:col-span-1">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Parent/Guardian Contact Number *</span>
+                                        </div>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter contact number" 
+                                        className="input input-bordered w-full"
+                                        required
+                                        name='parentContactNumber'
+                                        value={formData.parentContactNumber}
+                                        onChange={handleChange}
+                                    />
                                     </label>
                                 </div>
                             </div>
