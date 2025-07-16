@@ -64,6 +64,21 @@ const Students = () => {
             console.error("Submission error:", error);
         }
     };
+    const handleEditStudent = async (formData) => {
+        try {
+            const response = await axiosInstance.put(`/student/${studentId}`, formData);
+            toast.success('Student updated successfully!');
+            setIsEditStudentOpen(false);
+            
+            // Refresh student list
+            const res = await axiosInstance.get('/student');
+            setStudents(res.data);
+            
+        } catch (error) {
+            toast.error('Failed to update student');
+            console.error("Edit error:", error);
+        }
+    }
 
   return (
     <div>
@@ -95,6 +110,7 @@ const Students = () => {
         isEditStudentOpen={isEditStudentOpen}
         setIsEditStudentOpen={setIsEditStudentOpen}
         studentId={studentId}
+        handleEditStudent={handleEditStudent}
       />
       <StudentProfile 
         setIsEditStudentOpen={setIsEditStudentOpen}
