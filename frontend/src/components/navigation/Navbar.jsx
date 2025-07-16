@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = ({sidebarOpen, setSidebarOpen}) => {
   return (
-    <div className="navbar bg-base-100 pl-10 pr-10 sticky top-0 z-50">
+    <div className="navbar bg-success pl-10 pr-10 sticky top-0 z-50 border-b border-neutral-content ">
       {/* Sidebar toggle button */}
       <div className="flex-none">
         <label onClick={() => {setSidebarOpen(!sidebarOpen)}} className="btn btn-square btn-ghost drawer-button">

@@ -95,7 +95,7 @@ const Students = () => {
         
         {/* Responsive Button */}
         <button 
-          className="btn btn-primary btn-sm md:btn-md whitespace-nowrap"
+          className="btn btn-neutral btn-sm md:btn-md whitespace-nowrap"
           onClick={() => setIsStudentFormOpen(true)}
         >
           <IoIosAdd className='text-base-100 text-lg md:text-xl'/>
