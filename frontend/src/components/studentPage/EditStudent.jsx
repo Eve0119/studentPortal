@@ -4,6 +4,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { HiOutlineAcademicCap } from "react-icons/hi2";
 import { RiParentLine } from "react-icons/ri";
+import { FaRegCalendar } from "react-icons/fa";
 import axiosInstance from '../../lib/axios';
 import { capitalizeWords, getAge, formatDate} from '../../lib/utils';
 import CopyButton from '../ui/CopyButton';
@@ -45,7 +46,10 @@ const EditStudent = ({
                 ...student,
                 dateOfBirth: student.dateOfBirth
                     ? student.dateOfBirth.slice(0, 10)
-                    : ''
+                    : '',
+                enrollmentDate: student.enrollmentDate
+                    ? student.enrollmentDate.slice(0, 10)
+                    : '',
             });
         }
     }, [student]);
@@ -378,6 +382,31 @@ const EditStudent = ({
                                         name='zip'
                                         value={formData.address.zip}
                                         onChange={handleAddressChange} 
+                                    />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='mt-5 p-5 rounded-xl border border-neutral-content flex flex-col bg-white'>
+                            <div className='flex gap-2'>
+                                <FaRegCalendar className='text-accent text-2xl m-1'/>
+                                <span className='text-2xl text-primary-content font-semibold'>
+                                Enrollment Details
+                                </span>
+                            </div>
+                            <div className='mt-4 grid grid-cols-1 md:grid-cols-1 gap-x-4 items-start'>
+                                <div className="h-full md:col-span-1">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Enrollment Date *</span>
+                                        </div>
+                                    <input 
+                                        type="date" 
+                                        className="input input-bordered w-full"
+                                        name='enrollmentDate'
+                                        value={formData.enrollmentDate}
+                                        onChange={handleChange}
+                                        required
                                     />
                                     </label>
                                 </div>
