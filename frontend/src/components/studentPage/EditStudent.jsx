@@ -126,7 +126,7 @@ const EditStudent = ({
                                     <span className='text-neutral-content text-base'>Basic information about the student</span>
                                 </div>
                             </div>
-                            <div className='grid grid-cols-5 gap-x-4 items-start'>
+                            <div className='mt-4 grid grid-cols-1 md:grid-cols-5 gap-x-4 items-start'>
                                 <div className='col-span-2 h:full'>
                                     <label className="form-control w-full h-full flex flex-col">
                                         <div className="label">
@@ -202,6 +202,42 @@ const EditStudent = ({
                                             <option value='male'>Male</option>
                                             <option value='female'>Female</option>
                                         </select>
+                                    </label>
+                                </div>
+                            </div>      
+                            <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                                <div className="h-full">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Grade Level *</span>
+                                        </div>
+                                        <select className='select select-bordered w-full' required name="grade" value={formData.grade} onChange={handleChange}>
+                                            <option disabled value=''>Select grade level</option>
+                                            <option value="pre-k">Pre-K</option>
+                                            <option value="kindergarten">Kindergarten</option>
+                                            <option value="grade 1">Grade 1</option>
+                                            <option value="grade 2">Grade 2</option>
+                                            <option value="grade 3">Grade 3</option>
+                                            <option value="grade 4">Grade 4</option>
+                                            <option value="grade 5">Grade 5</option>
+                                            <option value="grade 6">Grade 6</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div className="h-full">
+                                    <label className="form-control w-full h-full flex flex-col">
+                                        <div className="label">
+                                            <span className="text-base font-semibold">Student Number *</span>
+                                        </div>
+                                        <input 
+                                        type="text"
+                                        className='input input-bordered w-full'
+                                        required
+                                        name='studentId'
+                                        placeholder='Enter student number'
+                                        value={formData.studentId}
+                                        onChange={handleChange}
+                                        />
                                     </label>
                                 </div>
                             </div>
