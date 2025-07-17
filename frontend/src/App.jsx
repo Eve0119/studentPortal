@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Routes, Route} from 'react-router'
+import {Routes, Route} from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Navbar from './components/navigation/Navbar.jsx'
