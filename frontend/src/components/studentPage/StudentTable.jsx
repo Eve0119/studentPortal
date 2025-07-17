@@ -44,7 +44,7 @@ const StudentTable = ({
 };
 
   return (
-    <div className='bg-white min-w-fit min-h-fit m-2 md:m-10 md:mt-5 p-4 md:p-10 md:pt-5 rounded-xl md:rounded-2xl border border-base-200 pb-0'>
+    <div className='bg-white min-w-fit min-h-fit m-2 md:m-10 md:mt-5 p-4 md:p-10 md:pt-5 rounded-lg md:rounded-lg border border-base-200 pb-0'>
       <div>
         <span className='justify-start text-primary-content text-2xl font-bold md:text-2xl'>
           Student Directory
