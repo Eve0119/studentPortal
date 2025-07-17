@@ -3,6 +3,7 @@ import { MdPeopleOutline } from "react-icons/md";
 import { PiExam } from "react-icons/pi";
 import { PiChartLineDown } from "react-icons/pi";
 import { CgPerformance } from "react-icons/cg";
+import GradeTable from '../components/gradePage/GradeTable';
 
 const Grades = () => {
 
@@ -17,7 +18,7 @@ const Grades = () => {
 
   return (
     <div>
-        <div className='bg-white flex w-auto border border-neutral-content p-4 m-7 rounded-lg flex-col gap-6'>
+        <div className='bg-white flex w-auto border border-neutral-content p-6 m-7 rounded-lg flex-col gap-6'>
             <div>
                 <h1 className='text-3xl font-bold'>Grades & Progress</h1>
                 <div className='pt-1'>
@@ -45,7 +46,7 @@ const Grades = () => {
                 </div>
                 <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100'>
                     <div className='p-3 rounded-lg bg-error text-white'>
-                        <PiChartLineDown utline className='text-2xl' />
+                        <PiChartLineDown className='text-2xl' />
                     </div>
                     <div className='flex flex-col'>
                         <span className='text-2xl font-bold'>{statistics.failingStudents}</span>
@@ -63,6 +64,7 @@ const Grades = () => {
                 </div>
             </div>
         </div>
+        <GradeTable />
     </div>
   )
 }

@@ -88,7 +88,7 @@ const Students = () => {
           <h1 className='text-primary-content font-bold text-xl md:text-2xl lg:text-3xl'>
             Students
           </h1>
-          <p className='text-secondary-content text-sm md:text-base'>
+          <p className='text-neutral-content text-sm md:text-base'>
             Manage student records and information
           </p>
         </div>
