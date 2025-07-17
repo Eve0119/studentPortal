@@ -1,13 +1,25 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router'
+import React, {useState, useEffect} from 'react'
+import { Link, useLocation } from 'react-router-dom';
 import { IoPersonOutline } from "react-icons/io5";
 import { GrScorecard } from "react-icons/gr";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
+import { LuChartSpline } from "react-icons/lu";
 
-const Sidebar = ({ open, setOpen }) => {
 
-  const [activeItem, setActiveItem] = useState('students');
+const Sidebar = ({ open }) => {
+
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState('');
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes('/dashboard')) setActiveItem('dashboard');
+    else if (path.includes('/students')) setActiveItem('students');
+    else if (path.includes('/grades')) setActiveItem('grades');
+    else if (path.includes('/attendance')) setActiveItem('attendance');
+    else if (path.includes('/classes')) setActiveItem('classes');
+  }, [location]);
 
   return(
     <div
@@ -51,11 +63,15 @@ const Sidebar = ({ open, setOpen }) => {
           ${open ? 'opacity-300 pointer-events-auto' : 'opacity-0 pointer-events-none'}
         `}
       >
+        <li><Link to={'/dashboard/0111'} className={`hover:bg-white active:!bg-white ${activeItem === 'dashboard' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('dashboard')}>
+          <LuChartSpline className='text-xl'/>
+          <span className='text-lg font-medium'>Dashboard</span></Link>
+        </li>
         <li><Link to={'/students'} className={`hover:bg-white active:!bg-white ${activeItem === 'students' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('students')}>
           <IoPersonOutline className='text-xl'/>
           <span className='text-lg font-medium'>Students</span></Link>
         </li>
-        <li><Link to={'/'} className={`hover:bg-white active:!bg-white ${activeItem === 'grades' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('grades')}>
+        <li><Link to={'/grades'} className={`hover:bg-white active:!bg-white ${activeItem === 'grades' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('grades')}>
           <GrScorecard className='text-xl'/>
           <span className='text-lg font-medium'>Grades</span></Link>
         </li>
@@ -72,4 +88,4 @@ const Sidebar = ({ open, setOpen }) => {
   )
 }
 
-export default Sidebar
+export default Sidebar;
