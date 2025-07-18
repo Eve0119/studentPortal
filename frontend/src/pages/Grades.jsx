@@ -4,6 +4,7 @@ import { PiExam } from "react-icons/pi";
 import { PiChartLineDown } from "react-icons/pi";
 import { CgPerformance } from "react-icons/cg";
 import GradeTable from '../components/gradePage/GradeTable';
+import GradeForm from '../components/gradePage/GradeForm';
 
 const Grades = () => {
 
@@ -15,6 +16,14 @@ const Grades = () => {
     }
 
     const [statistics, setStatistics] = useState(statisticsData);
+    const [isGradeFormOpen, setIsGradeFormOpen] = useState(false);
+
+    const handleSubmitGradeForm = (e) => {
+        e.preventDefault();
+        // Logic to handle form submission
+        console.log("Grade form submitted");
+        setIsGradeFormOpen(false);
+    }
 
   return (
     <div>
@@ -64,7 +73,14 @@ const Grades = () => {
                 </div>
             </div>
         </div>
-        <GradeTable />
+        <GradeTable 
+            setIsGradeFormOpen={setIsGradeFormOpen}
+        />
+        <GradeForm 
+            isGradeFormOpen={isGradeFormOpen}
+            setIsGradeFormOpen={setIsGradeFormOpen}
+            handleSubmitGradeForm={handleSubmitGradeForm}   
+        />
     </div>
   )
 }
