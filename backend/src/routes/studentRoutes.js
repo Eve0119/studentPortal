@@ -1,6 +1,6 @@
 import express from 'express';
 import {createStudent, getAllStudent, getStudent, updateStudent, deleteStudent} from '../controllers/studentController.js'
-import {verifyToken, checkAdmin} from '../middleware/authMiddleware.js';
+import {verifyToken, checkAdmin} from '../config/authMiddleware.js';
 
 const router = express.Router();
 

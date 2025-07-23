@@ -52,6 +52,9 @@ const studentSchema = new mongoose.Schema({
     },
     adviser: {
         type: String, required: false
+    },
+    role: {
+        type: String, enum: ['student', 'admin'], default: 'student'
     }
 },{
     timestamps:true

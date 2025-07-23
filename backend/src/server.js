@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import studentRoutes from './routes/studentRoutes.js';
 import { connectDB } from './config/db.js';
-import { verifyToken } from './middleware/authMiddleware.js';
 
 dotenv.config();
 
