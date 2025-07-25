@@ -7,6 +7,7 @@ import Sidebar from './components/navigation/Sidebar.jsx'
 import Students from './pages/Students.jsx'
 import Grades from './pages/Grades.jsx'
 import Login from './components/publicRoutes/Login.jsx'
+import AuthRoute from './components/navigation/AuthRoute.jsx';
 
 // Layout component for routes with Navbar/Sidebar
 const DashboardLayout = ({ sidebarOpen, setSidebarOpen }) => (
@@ -33,8 +34,22 @@ const App = () => {
 
         {/* Protected routes with Navbar/Sidebar */}
         <Route element={<DashboardLayout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/students" element={<Students />} />
+          <Route
+            path="/dashboard"
+            element={
+              <AuthRoute>
+                <Dashboard />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/students"
+            element={
+              <AuthRoute>
+                <Students />
+              </AuthRoute>
+            }
+          />
           <Route path="/grades" element={<Grades />} />
           <Route path="/dashboard/:id" element={<Dashboard />} />
         </Route>
