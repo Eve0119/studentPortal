@@ -12,8 +12,8 @@ export const verifyToken = async (req, res, next) => {
   }
 };
 
-export const checkAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
+export const checkPermission = (req, res, next) => {
+  if (req.user.role !== 'teacher' || req.user.role !== 'admin') {
     return res.status(403).json({ error: "Forbidden: Admin access required" });
   }
   next();
