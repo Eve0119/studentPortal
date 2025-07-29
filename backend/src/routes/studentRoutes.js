@@ -1,13 +1,13 @@
 import express from 'express';
 import {createStudent, getAllStudent, getStudent, updateStudent, deleteStudent} from '../controllers/studentController.js'
-import {verifyToken, checkAdmin} from '../config/authMiddleware.js';
+import {verifyToken, checkPermission} from '../config/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', verifyToken, checkAdmin, getAllStudent);
-router.get('/:id', verifyToken, checkAdmin, getStudent)
-router.post('/', verifyToken, checkAdmin, createStudent)
-router.put('/:id', verifyToken, checkAdmin, updateStudent)
-router.delete('/:id', verifyToken, checkAdmin, deleteStudent)
+router.get('/', verifyToken, checkPermission, getAllStudent);
+router.get('/:id', verifyToken, checkPermission, getStudent)
+router.post('/', verifyToken, checkPermission, createStudent)
+router.put('/:id', verifyToken, checkPermission, updateStudent)
+router.delete('/:id', verifyToken, checkPermission, deleteStudent)
 
 export default router;
