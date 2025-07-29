@@ -33,3 +33,6 @@ const teacherSchema = new mongoose.Schema({
         type: Date, required: true
     },
 })
+
+const TeacherModel = mongoose.model('Teacher', teacherSchema);
+export default TeacherModel;
