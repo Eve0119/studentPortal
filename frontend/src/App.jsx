@@ -8,6 +8,7 @@ import Students from './pages/Students.jsx'
 import Grades from './pages/Grades.jsx'
 import Login from './components/publicRoutes/Login.jsx'
 import AuthRoute from './components/navigation/AuthRoute.jsx';
+import Teacher from './pages/Teacher.jsx';
 
 // Layout component for routes with Navbar/Sidebar
 const DashboardLayout = ({ sidebarOpen, setSidebarOpen }) => (
@@ -47,6 +48,14 @@ const App = () => {
             element={
               <AuthRoute>
                 <Students />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/teachers"
+            element={
+              <AuthRoute>
+                <Teacher />
               </AuthRoute>
             }
           />
