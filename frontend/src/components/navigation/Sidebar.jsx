@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { IoPersonOutline } from "react-icons/io5";
 import { GrScorecard } from "react-icons/gr";
-import { FaRegCalendarCheck } from "react-icons/fa";
+import { FaRegCalendarCheck, FaChalkboardTeacher } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
 import { LuChartSpline } from "react-icons/lu";
 
@@ -19,6 +19,7 @@ const Sidebar = ({ open }) => {
     else if (path.includes('/grades')) setActiveItem('grades');
     else if (path.includes('/attendance')) setActiveItem('attendance');
     else if (path.includes('/classes')) setActiveItem('classes');
+    else if (path.includes('/teachers')) setActiveItem('teachers');
   }, [location]);
 
   return(
@@ -82,6 +83,10 @@ const Sidebar = ({ open }) => {
         <li><Link to={'/'} className={`hover:bg-white active:!bg-white ${activeItem === 'classes' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('classes')}>
           <TbBooks className='text-xl'/>
           <span className='text-lg font-medium'>Classes</span></Link>
+        </li>
+        <li><Link to={'/teachers'} className={`hover:bg-white active:!bg-white ${activeItem === 'teachers' ? '!bg-white !text-primary' : ''}`} onClick={() => setActiveItem('teachers')}>
+          <FaChalkboardTeacher className='text-xl'/>
+          <span className='text-lg font-medium'>Teachers</span></Link>
         </li>
       </ul>
     </div>
