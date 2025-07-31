@@ -1,4 +1,5 @@
 import React from 'react'
+import TeacherTable from '../components/teacherPage/TeacherTable'
 
 const Teacher = () => {
   return (
@@ -71,9 +72,7 @@ const Teacher = () => {
           </div>
         </div>
       </div>
-      <div className='flex flex-col w-auto m-7 p-6 gap-6 bg-white border border-neutral-content rounded-lg'>
-
-      </div>
+      <TeacherTable />
     </div>
   )
 }
