@@ -83,7 +83,7 @@ const Students = () => {
   return (
     <div>
       {/* Responsive Header Section */}
-      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 m-4 md:mr-10 md:ml-10 mt-1 mb-5'>
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 m-4 md:mr-10 md:ml-10 mb-5'>
         <div>
           <h1 className='text-primary-content font-bold text-xl md:text-2xl lg:text-3xl'>
             Students
