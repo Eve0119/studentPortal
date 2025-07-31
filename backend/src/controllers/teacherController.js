@@ -1,4 +1,4 @@
-import TeacherModel from '../models/teacherModel.js';
+import TeacherModel from '../models/TeacherModel.js';
 
 export async function getAllTeachers(_, res) {
     try {
