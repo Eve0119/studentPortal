@@ -1,7 +1,54 @@
+import { beforeAuthStateChanged } from 'firebase/auth';
 import React, {useRef, useState, useEffect} from 'react'
 import { IoIosClose } from "react-icons/io";
 
 const TeacherForm = ({isTeacherFormOpen, setIsTeacherFormOpen}) => {
+
+    const initialFormState = {
+        lastName: '',
+        firstName: '',
+        middleInitial: '',
+        email: '',
+        assignedGradeLevel: '',
+        contactNumber: '',
+        address: {
+            street: '',
+            barangay: '',
+            city: '',
+            zip: ''
+        },
+        dateOfBirth: '',
+        gender: '',
+        civilStatus: '',
+        benefits: {
+            sssNumber: '',
+            philHealthNumber: '',
+            pagIbigNumber: '',
+            tinNumber: ''
+            },
+        dateHired: ''
+    }
+
+    const [formData, setFormData] = useState(initialFormState);
+    
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    const handleAddressChange = (e) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({
+            ...prev,
+            address: {
+                ...prev.address,
+                [name]: value
+            }
+        }));
+    };
 
     const teacherFormRef = useRef(null)
     useEffect(() => {
