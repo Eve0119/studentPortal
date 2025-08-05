@@ -29,6 +29,9 @@ const teacherSchema = new mongoose.Schema({
     gender: {
         type: String, enum: ['Male', 'Female'], required: true
     },
+    civilStatus: {
+        type: String, enum: ['Single', 'Married', 'Widowed', 'Divorced'], required: true
+    },
     benefits: {
         sssNumber: { type: String, required: false },
         philHealthNumber: { type: String, required: false },
