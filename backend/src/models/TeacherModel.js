@@ -14,7 +14,9 @@ const teacherSchema = new mongoose.Schema({
         type: String, required: true, unique: true
     },
     assignedGradeLevel: {
-        type: String, required: true, enum: ['Pre-K', 'Kindergarten', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6']
+    type: [String],
+    required: true,
+    enum: ['Pre-K', 'Kindergarten', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6']
     },
     contactNumber: {type: String },
     address: {
