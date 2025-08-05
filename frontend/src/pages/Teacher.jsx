@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import TeacherTable from '../components/teacherPage/TeacherTable'
 
 const Teacher = () => {
+
+  const [isTeacherFormOpen, setIsTeacherFormOpen] = useState(false)
+
   return (
     <div>
       <div className='flex flex-col w-auto border border-neutral-content rounded-lg bg-white text-center m-7 p-6 items-start gap-6'>
@@ -72,7 +75,10 @@ const Teacher = () => {
           </div>
         </div>
       </div>
-      <TeacherTable />
+      <TeacherTable
+      setIsTeacherFormOpen={setIsTeacherFormOpen}
+      isTeacherFormOpen={isTeacherFormOpen}
+      />
     </div>
   )
 }
