@@ -163,20 +163,31 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className='space-y-1'>
-                                <label className='block text-sm font-medium text-gray-700'>Assigned Grade Level *</label>
-                                <select
-                                    className='select select-bordered w-full'
-                                    required
-                                    name='assignedGradeLevel'
-                                    value={formData.assignedGradeLevel}
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Select Grade</option>
-                                    {Array.from({ length: 12 }, (_, i) => (
-                                        <option key={i+1} value={`Grade ${i+1}`}>Grade {i+1}</option>
+                            <div className='space-y-2'>
+                                <label className='block text-sm font-medium text-gray-700'>Assigned Grade Level(s) *</label>
+                                <div className='grid grid-cols-2 gap-2'>
+                                    {['Pre-K', 'Kindergarten', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6'].map((grade) => (
+                                        <label key={grade} className='label cursor-pointer justify-start gap-2'>
+                                            <input
+                                                type='checkbox'
+                                                className='checkbox checkbox-sm'
+                                                checked={formData.assignedGradeLevel?.includes(grade) || false}
+                                                onChange={(e) => {
+                                                    setFormData(prev => {
+                                                        const current = prev.assignedGradeLevel || [];
+                                                        return {
+                                                            ...prev,
+                                                            assignedGradeLevel: e.target.checked
+                                                                ? [...current, grade]
+                                                                : current.filter(g => g !== grade)
+                                                        };
+                                                    });
+                                                }}
+                                            />
+                                            <span className='label-text'>{grade}</span>
+                                        </label>
                                     ))}
-                                </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -263,7 +274,6 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
                                     <option value="">Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                             <div className='space-y-1'>
@@ -349,7 +359,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
 
                     {/* Form Actions */}
                     <div className='flex justify-end sticky bottom-0 bg-transparent py-2'>
-                        <div className='flex items-end space-x-3 bg-white border border-neutral-content rounded-lg p-4'>
+                        <div className='flex items-end space-x-3 bg-transparent  rounded-lg py-2'>
                             <button
                                 type='button'
                                 onClick={() => {setFormData(initialFormState); setIsTeacherFormOpen(false)}}
