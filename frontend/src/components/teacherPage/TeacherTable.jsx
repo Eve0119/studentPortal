@@ -2,7 +2,7 @@ import React from 'react'
 import { IoIosAdd } from "react-icons/io";
 import TeacherForm from './TeacherForm'
 
-const TeacherTable = ({isTeacherFormOpen, setIsTeacherFormOpen}) => {
+const TeacherTable = ({isTeacherFormOpen, setIsTeacherFormOpen, teachers, setTeachers}) => {
   return (
     <div className="w-full">     
       <div className='flex flex-col w-auto mx-4 my-4 md:m-6 p-4 md:p-6 gap-4 md:gap-6 bg-white border border-neutral-content rounded-lg'>
@@ -34,6 +34,7 @@ const TeacherTable = ({isTeacherFormOpen, setIsTeacherFormOpen}) => {
       <TeacherForm 
         setIsTeacherFormOpen={setIsTeacherFormOpen} 
         isTeacherFormOpen={isTeacherFormOpen}
+        setTeachers={setTeachers}
       />
     </div>
   )
