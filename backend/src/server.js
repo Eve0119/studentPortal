@@ -4,6 +4,7 @@ import cors from 'cors';
 import studentRoutes from './routes/studentRoutes.js';
 import teacherRoutes from './routes/teacherRoutes.js';
 import { connectDB } from './config/db.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors({ origin: 'http://localhost:5173' }));
 // Apply middleware to specific routes
 app.use("/api/student", studentRoutes);
 app.use("/api/teacher", teacherRoutes);
+app.use("/api/admin", adminRoutes);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
