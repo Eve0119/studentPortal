@@ -359,26 +359,29 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
 
                     {/* Form Actions */}
                     <div className='flex justify-end sticky bottom-0 bg-transparent py-2'>
-                        <div className='flex items-end space-x-3 bg-transparent  rounded-lg py-2'>
+                        <div className='flex flex-col sm:flex-row items-end gap-2 sm:gap-3 bg-transparent rounded-lg py-2'>
                             <button
-                                type='button'
-                                onClick={() => {setFormData(initialFormState); setIsTeacherFormOpen(false)}}
-                                className='btn bg-error'
+                            type='button'
+                            onClick={() => {setFormData(initialFormState); setIsTeacherFormOpen(false)}}
+                            className='btn bg-error w-full sm:w-auto'
                             >
-                                <MdOutlineCancel mr-2/> Cancel
+                                <MdOutlineCancel className='mr-0 sm:mr-2'/> 
+                                <span className='hidden sm:inline'>Cancel</span>
                             </button>
                             <button
-                                type='button'
-                                onClick={handleReset}
-                                className='btn bg-warning'
+                            type='button'
+                            onClick={handleReset}
+                            className='btn bg-warning w-full sm:w-auto'
                             >
-                                <FaUndo className='mr-2' /> Reset
+                                <FaUndo className='mr-0 sm:mr-2' /> 
+                                <span className='hidden sm:inline'>Reset</span>
                             </button>
                             <button
-                                type='submit'
-                                className='btn btn-primary text-white'
+                            type='submit'
+                            className='btn btn-primary text-white w-full sm:w-auto'
                             >
-                                <FaSave className='mr-2' /> Save Teacher
+                                <FaSave className='mr-0 sm:mr-2' /> 
+                                <span className='hidden sm:inline'>Save Teacher</span>
                             </button>
                         </div>
                     </div>
