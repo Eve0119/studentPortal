@@ -2,8 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import { IoIosClose } from "react-icons/io";
 import { FaSave, FaUndo } from "react-icons/fa";
 import { MdOutlineCancel } from "react-icons/md";
+import axiosInstance from '../../lib/axios';
+import toast from 'react-hot-toast';
 
-const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
+const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
     const initialFormState = {
         lastName: '',
         firstName: '',
@@ -70,16 +72,21 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSave(formData);
-        setFormData(initialFormState);
-        setIsTeacherFormOpen(false);
-    };
-
     const handleReset = () => {
         setFormData(initialFormState);
     };
+
+    const handleSubmitTeacherForm = async (formData) => {
+        try {
+            const response = await axiosInstance.post('/teacher', formData);
+            setFormData(initialFormState);
+            setIsTeacherFormOpen(false);
+            toast.success('Teacher added successfully!');
+        } catch (error) {
+            console.error("Error adding teacher", error);
+            toast.error("Failed to add teacher. Please try again later");
+        }
+    }
 
     return (
         <dialog ref={teacherFormRef} id='teacherModal' className="modal modal-middle backdrop-blur-sm">
@@ -97,7 +104,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className='space-y-6'>
+                <form onSubmit={ (e) => {e.preventDefault(); handleSubmitTeacherForm(formData)}} className='space-y-6'>
                     {/* Personal Information Section */}
                     <div className='bg-white p-6 rounded-lg border border-gray-200'>
                         <h3 className='text-lg font-semibold text-gray-700 mb-4'>Personal Information</h3>
