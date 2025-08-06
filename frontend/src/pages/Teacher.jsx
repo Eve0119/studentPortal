@@ -3,6 +3,7 @@ import TeacherTable from '../components/teacherPage/TeacherTable'
 
 const Teacher = () => {
   const [isTeacherFormOpen, setIsTeacherFormOpen] = useState(false)
+  const [Teachers, setTeachers] = useState([])
 
   return (
     <div className="overflow-x-auto">
@@ -60,6 +61,8 @@ const Teacher = () => {
       <TeacherTable
         setIsTeacherFormOpen={setIsTeacherFormOpen}
         isTeacherFormOpen={isTeacherFormOpen}
+        Teachers={Teachers}
+        setTeachers={setTeachers}
       />
     </div>
   )
