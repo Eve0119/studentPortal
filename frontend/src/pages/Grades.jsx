@@ -35,7 +35,7 @@ const Grades = () => {
                 </div>
             </div>
             <div className='grid grid-cols-4 w-auto gap-4'>
-                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100'>
+                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100 hover:scale-110 transition-transform'>
                     <div className='p-3 rounded-lg bg-info text-white'>
                         <MdPeopleOutline className='text-2xl' />
                     </div>
@@ -44,7 +44,7 @@ const Grades = () => {
                         <span className='text-sm text-neutral'>Total Students</span>
                     </div>
                 </div>
-                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100'>
+                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100 hover:scale-110 transition-transform'>
                     <div className='p-3 rounded-lg bg-success text-white'>
                         <PiExam className='text-2xl' />
                     </div>
@@ -53,7 +53,7 @@ const Grades = () => {
                         <span className='text-sm text-neutral'>Average Grade</span>
                     </div>
                 </div>
-                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100'>
+                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100 hover:scale-110 transition-transform'>
                     <div className='p-3 rounded-lg bg-error text-white'>
                         <PiChartLineDown className='text-2xl' />
                     </div>
@@ -62,7 +62,7 @@ const Grades = () => {
                         <span className='text-sm text-neutral'>Failing Students</span>
                     </div>
                 </div>
-                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100'>
+                <div className='col-span-1 border rounded-lg p-4 flex items-center gap-4 bg-base-100 hover:scale-110 transition-transform'>
                     <div className='p-3 rounded-lg bg-warning text-white'>
                         <CgPerformance className='text-2xl' />
                     </div>
