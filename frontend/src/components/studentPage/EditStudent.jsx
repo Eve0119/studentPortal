@@ -101,7 +101,7 @@ const EditStudent = ({
 
   return (
     <div>
-      <dialog ref={editStudentRef} className='modal'>
+      <dialog ref={editStudentRef} className='modal modal-middle backdrop-blur-sm'>
         <div className="modal-box !max-w-none w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[70vw] xl:w-[60vw] 2xl:w-[50vw] max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-start top-0 z-10 bg-base-100 pt-0 pb-2 -mx-4 px-4">
             <div className='flex justify-start flex-col'>

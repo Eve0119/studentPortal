@@ -82,7 +82,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen, onSave }) => {
     };
 
     return (
-        <dialog ref={teacherFormRef} id='teacherModal' className="modal backdrop-blur-sm">
+        <dialog ref={teacherFormRef} id='teacherModal' className="modal modal-middle backdrop-blur-sm">
             <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[70vw] max-h-[90vh] overflow-y-auto pb-0">
                 <div className='flex justify-between items-start top-0 z-10'>
                     <div className='flex flex-col'>

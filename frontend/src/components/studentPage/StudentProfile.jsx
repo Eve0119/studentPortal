@@ -48,7 +48,7 @@ const StudentProfile = ({
 
     return (
         <div>
-            <dialog ref={studentProfileRef} className="modal">
+            <dialog ref={studentProfileRef} className="modal modal-middle backdrop-blur-sm">
                 <div className="modal-box !max-w-none !pt-0 w-[95vw] sm:w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw] max-h-[90vh] sm:max-h-[95vh] overflow-y-auto">
                     <div className="flex justify-between items-start sticky top-0 z-10 bg-base-100 pt-4 pb-2 -mx-4 px-4">
                         <div className='flex justify-start flex-col'>

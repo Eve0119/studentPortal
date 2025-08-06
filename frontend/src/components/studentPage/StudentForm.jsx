@@ -58,7 +58,7 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
     
   return (
     <div>
-        <dialog ref={studentFormRef} id='studentModal1' className="modal modal-middle ">
+        <dialog ref={studentFormRef} id='studentModal1' className="modal modal-middle backdrop-blur-sm">
         <div className="modal-box !max-w-none w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
             <div className='flex justify-between align-top pt-0 pr-0'>
                 <span className='text-2xl text-primary-content font-bold'>Add New Student</span>
