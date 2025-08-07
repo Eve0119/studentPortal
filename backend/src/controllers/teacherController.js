@@ -1,4 +1,7 @@
+import { adminAuth } from '../config/firebase-admin.js';
 import TeacherModel from '../models/TeacherModel.js';
+import { sendEmail } from '../config/sendEmail.js';
+
 
 export async function getAllTeachers(_, res) {
     try {
@@ -26,12 +29,40 @@ export async function getTeacher(req, res) {
 
 export async function createTeacher(req, res) {
     try {
-        const createdTeacher = await TeacherModel.create(req.body);
-        res.status(201).json(createdTeacher);
+        const { email, ...rest } = req.body;
+        const tempPassword = Math.random().toString(36).slice(-8);
+
+        const userRecord = await adminAuth.createUser({
+            email,
+            password: tempPassword,
+            emailVerified: false,
+            disabled: false,
+        });
+
+        const resetLink = await adminAuth.generatePasswordResetLink(email);
+
+        // Send password reset link to teacher's email
+        await sendEmail(
+            email,
+            "Set Your Teacher Portal Password",
+            `<p>Welcome to Student Portal!<br>
+            Please <a href="${resetLink}">click here</a> to set your password.</p>`
+        );
+
+        const createdTeacher = await TeacherModel.create({
+            email,
+            firebaseUid: userRecord.uid,
+            ...rest
+        });
+
+        res.status(201).json({
+            teacher: createdTeacher,
+            message: "Teacher created. Password reset email sent."
+        });
     } catch (error) {
         console.error("Error in createTeacher controller", error);
         res.status(500).json({ message: "Internal server error" });
-    }   
+    }
 }
 
 export async function updateTeacher(req, res) {
