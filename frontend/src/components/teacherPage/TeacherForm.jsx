@@ -78,15 +78,23 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
     };
 
     const handleSubmitTeacherForm = async (formData) => {
+        setIsLoading(true);
         try {
             const response = await axiosInstance.post('/teacher', formData);
             setFormData(initialFormState);
+            toast.success(response.data.message);
+        } catch (error) {
+            const errorCode = error.response?.data?.error?.code;
+            const defaultMsg = "Failed to add teacher. Please try again later";
+            
+            toast.error({
+                'EMAIL_EXISTS': "This email is already registered",
+                'SERVER_ERROR': defaultMsg
+            }[errorCode] || defaultMsg);
+            
+        } finally {
             setIsLoading(false);
             setIsTeacherFormOpen(false);
-            toast.success('Teacher added successfully!');
-        } catch (error) {
-            console.error("Error adding teacher", error);
-            toast.error("Failed to add teacher. Please try again later");
         }
     }
 

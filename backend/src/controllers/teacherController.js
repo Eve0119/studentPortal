@@ -28,48 +28,69 @@ export async function getTeacher(req, res) {
 }
 
 export async function createTeacher(req, res) {
-    try {
-        const { email, ...rest } = req.body;
-        const tempPassword = Math.random().toString(36).slice(-8);
+    const { email, ...rest } = req.body;
+    
+    // 1. Fast MongoDB check first (indexed query)
+    const existingTeacher = await TeacherModel.findOne({ email }).select('_id').lean();
+    if (existingTeacher) {
+        return res.status(409).json({ 
+            error: {
+                code: 'EMAIL_EXISTS',
+                message: 'Email already registered'
+            }
+        });
+    }
 
+    try {
+        // 2. Firebase operations
+        const tempPassword = Math.random().toString(36).slice(-8);
         const userRecord = await adminAuth.createUser({
             email,
             password: tempPassword,
             emailVerified: false,
-            disabled: false,
         });
 
-        const resetLink = await adminAuth.generatePasswordResetLink(email);
+        // 3. Parallelize non-dependent operations
+        const [resetLink] = await Promise.all([
+            adminAuth.generatePasswordResetLink(email),
+            TeacherModel.create({
+                email,
+                firebaseUid: userRecord.uid,
+                ...rest
+            }),
+            adminAuth.setCustomUserClaims(userRecord.uid, { role: "teacher" })
+        ]);
 
-        // Send password reset link to teacher's email
-        await sendEmail(
+        // 4. Fire-and-forget email (don't await)
+        sendEmail(
             email,
-            "Set Your Teacher Portal Password",
-            `<p>Welcome to Student Portal!<br>
-            Please <a href="${resetLink}">click here</a> to set your password.</p>`
-        );
+            "Set Your Password",
+            `Please <a href="${resetLink}">set your password</a>`
+        ).catch(e => console.error("Email failed:", e));
 
-        const createdTeacher = await TeacherModel.create({
-            email,
-            firebaseUid: userRecord.uid,
-            ...rest
+        return res.status(201).json({
+            message: "Teacher created successfully"
         });
 
-        const uid  =  userRecord.uid;
-
-        try {
-            await adminAuth.setCustomUserClaims(uid, { role: "teacher" });
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
+    } catch (error) {
+        console.error("Error:", error);
+        
+        // Specific Firebase errors
+        if (error.code === 'auth/email-already-exists') {
+            return res.status(409).json({
+                error: {
+                    code: 'EMAIL_EXISTS',
+                    message: 'Email already registered'
+                }
+            });
         }
 
-        res.status(201).json({
-            teacher: createdTeacher,
-            message: "Teacher created. Password reset email sent."
+        return res.status(500).json({ 
+            error: {
+                code: 'SERVER_ERROR',
+                message: 'Internal server error'
+            }
         });
-    } catch (error) {
-        console.error("Error in createTeacher controller", error);
-        res.status(500).json({ message: "Internal server error" });
     }
 }
 
