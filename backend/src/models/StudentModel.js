@@ -55,7 +55,17 @@ const studentSchema = new mongoose.Schema({
     },
     role: {
         type: String, enum: ['student', 'admin'], default: 'student'
-    }
+    },
+    imageUrl: { 
+        type: String, 
+        default: "https://academix-student-portal.s3.ap-southeast-2.amazonaws.com/default-profile/student-default-profile-male.webp",
+        required: false
+    },
+    imageKey: { 
+        type: String, 
+        default: "default-profile/student-default-profile-male.webp",
+        required: false
+    },
 },{
     timestamps:true
 })
