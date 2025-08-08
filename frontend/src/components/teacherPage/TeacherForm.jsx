@@ -11,7 +11,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
         firstName: '',
         middleInitial: '',
         email: '',
-        assignedGradeLevel: '',
+        assignedGradeLevel: [],
         contactNumber: '',
         address: {
             street: '',
@@ -31,6 +31,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
         dateHired: ''
     };
 
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState(initialFormState);
     const teacherFormRef = useRef(null);
 
@@ -80,6 +81,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
         try {
             const response = await axiosInstance.post('/teacher', formData);
             setFormData(initialFormState);
+            setIsLoading(false);
             setIsTeacherFormOpen(false);
             toast.success('Teacher added successfully!');
         } catch (error) {
@@ -104,7 +106,7 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
                     </button>
                 </div>
 
-                <form onSubmit={ (e) => {e.preventDefault(); handleSubmitTeacherForm(formData)}} className='space-y-6'>
+                <form onSubmit={ (e) => {e.preventDefault();setIsLoading(true) ;handleSubmitTeacherForm(formData)}} className='space-y-6'>
                     {/* Personal Information Section */}
                     <div className='bg-white p-6 rounded-lg border border-gray-200'>
                         <h3 className='text-lg font-semibold text-gray-700 mb-4'>Personal Information</h3>
@@ -368,27 +370,49 @@ const TeacherForm = ({ isTeacherFormOpen, setIsTeacherFormOpen }) => {
                     <div className='flex justify-end sticky bottom-0 bg-transparent py-2'>
                         <div className='flex flex-col sm:flex-row items-end gap-2 sm:gap-3 bg-transparent rounded-lg py-2'>
                             <button
-                            type='button'
-                            onClick={() => {setFormData(initialFormState); setIsTeacherFormOpen(false)}}
-                            className='btn bg-error w-full sm:w-auto'
+                                type='button'
+                                onClick={() => { setFormData(initialFormState); setIsTeacherFormOpen(false); }}
+                                className='btn bg-error w-full sm:w-auto flex items-center justify-center relative'
+                                disabled={isLoading}
                             >
-                                <MdOutlineCancel className='mr-0 sm:mr-2'/> 
-                                <span className='hidden sm:inline'>Cancel</span>
+                                {isLoading && (
+                                <span className="loading loading-spinner loading-sm absolute inset-0 m-auto"></span>
+                                )}
+                                <div className={`flex items-center ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+                                    <MdOutlineCancel className='mr-0 sm:mr-2' />
+                                    <span className='hidden sm:inline'>Cancel</span>
+                                </div>
                             </button>
+
+                            {/* Reset Button */}
                             <button
-                            type='button'
-                            onClick={handleReset}
-                            className='btn bg-warning w-full sm:w-auto'
+                                type='button'
+                                onClick={handleReset}
+                                className='btn bg-warning w-full sm:w-auto flex items-center justify-center relative'
+                                disabled={isLoading}
                             >
-                                <FaUndo className='mr-0 sm:mr-2' /> 
-                                <span className='hidden sm:inline'>Reset</span>
+                                {isLoading && (
+                                <span className="loading loading-spinner loading-sm absolute inset-0 m-auto"></span>
+                                )}
+                                <div className={`flex items-center ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+                                    <FaUndo className='mr-0 sm:mr-2' />
+                                    <span className='hidden sm:inline'>Reset</span>
+                                </div>
                             </button>
+
+                            {/* Save Teacher Button */}
                             <button
-                            type='submit'
-                            className='btn btn-primary text-white w-full sm:w-auto'
+                                type='submit'
+                                className='btn btn-primary text-white w-full sm:w-auto flex items-center justify-center relative'
+                                disabled={isLoading}
                             >
-                                <FaSave className='mr-0 sm:mr-2' /> 
-                                <span className='hidden sm:inline'>Save Teacher</span>
+                                {isLoading && (
+                                <span className="loading loading-spinner loading-sm absolute inset-0 m-auto"></span>
+                                )}
+                                <div className={`flex items-center ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+                                    <FaSave className='mr-0 sm:mr-2' />
+                                    <span className='hidden sm:inline'>Save Teacher</span>
+                                </div>
                             </button>
                         </div>
                     </div>
