@@ -55,6 +55,14 @@ export async function createTeacher(req, res) {
             ...rest
         });
 
+        const uid  =  userRecord.uid;
+
+        try {
+            await adminAuth.setCustomUserClaims(uid, { role: "teacher" });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+
         res.status(201).json({
             teacher: createdTeacher,
             message: "Teacher created. Password reset email sent."
