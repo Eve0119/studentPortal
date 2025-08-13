@@ -6,7 +6,6 @@ import StudentTable from '../components/studentPage/StudentTable';
 import StudentForm from '../components/studentPage/StudentForm';
 import StudentProfile from '../components/studentPage/StudentProfile';
 import EditStudent from '../components/studentPage/EditStudent';
-
 const Students = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [students, setStudents] = useState([])
@@ -51,7 +50,7 @@ const Students = () => {
 
     const handleSubmitStudentForm = async (formData) => {
         try {
-            const response = await axiosInstance.post('/student', formData);
+            await axiosInstance.post('/student', formData);
             toast.success('Student added successfully!');
             setIsStudentFormOpen(false);
             
