@@ -23,6 +23,9 @@ const studentSchema = new mongoose.Schema({
     contactNumber: {
         type:String, required:false
     },
+    email: {
+        type:String, required:true
+    },
     address: {
         street: { type: String, required: true },
         barangay: {type: String, required: true},
@@ -56,16 +59,18 @@ const studentSchema = new mongoose.Schema({
     role: {
         type: String, enum: ['student', 'admin'], default: 'student'
     },
-    imageUrl: { 
-        type: String, 
-        default: "https://academix-student-portal.s3.ap-southeast-2.amazonaws.com/default-profile/student-default-profile-male.webp",
-        required: false
-    },
-    imageKey: { 
-        type: String, 
-        default: "default-profile/student-default-profile-male.webp",
-        required: false
-    },
+    profileImage: {
+        url: { 
+            type: String, 
+            default: "https://academix-student-portal.s3.ap-southeast-2.amazonaws.com/default-profile/student-default-profile-male.webp",
+            required: false
+        },
+        key: { 
+            type: String, 
+            default: "default-profile/student-default-profile-male.webp",
+            required: false
+        }
+    }
 },{
     timestamps:true
 })
