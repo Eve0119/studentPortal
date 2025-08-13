@@ -3,6 +3,8 @@ import { IoIosClose } from "react-icons/io";
 import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { RiParentLine } from "react-icons/ri";
 import { FaRegCalendar } from "react-icons/fa";
+import { uploadStudentImage } from '../../lib/awsS3';
+import toast from 'react-hot-toast';
 
 const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStudentForm}) => {
 
@@ -12,6 +14,8 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
         middleInitial: '',
         dateOfBirth: '',
         gender: '',
+        contactNumber: '',
+        email: '',
         grade: '',
         studentId: '',
         parentGuardianName: '',
@@ -22,7 +26,11 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
             city: '', 
             zip: '',
         },
-        enrollmentDate: new Date().toISOString().split('T')[0]
+        enrollmentDate: new Date().toISOString().split('T')[0],
+        profileImage: {
+            url: '',
+            key: ''
+        }
     };    
     const [formData, setFormData] = useState(initialFormState);
     const handleChange = (e) => {
@@ -55,6 +63,49 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
         setFormData(initialFormState);
     }
     }, [isStudentFormOpen]);
+
+    
+    const [isUploading, setIsUploading] = useState(false);
+
+    const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type and size
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+        toast.error('Only JPEG, PNG, or WEBP images allowed');
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast.error('Image must be smaller than 5MB');
+        return;
+    }
+
+    setIsUploading(true);
+    try {
+        const { url, key } = await uploadStudentImage(
+        file,
+        formData.studentId || 'temp', // Use 'temp' if studentId not set yet
+        formData.email
+        );
+
+        setFormData(prev => ({
+        ...prev,
+        profileImage: {
+            url,
+            key
+        }
+        }));
+        toast.success('Profile image uploaded successfully!');
+    } catch (error) {
+        console.error("Upload error:", error);
+        toast.error(error.message || 'Failed to upload image');
+    } finally {
+        setIsUploading(false);
+    }
+    };
     
   return (
     <div>
@@ -197,6 +248,69 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
                                 />
                             </label>
                         </div>
+                    </div>
+                    <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-4 items-start'>
+                        <div className="h-full">
+                            <label className="form-control w-full h-full flex flex-col">
+                                <div className="label">
+                                    <span className="text-base font-semibold">Contact Number</span>
+                                </div>
+                                <input 
+                                type="text"
+                                className='input input-bordered w-full'
+                                name='contactNumber'
+                                placeholder='Enter contact number'
+                                value={formData.contactNumber}
+                                onChange={handleChange}
+                                />
+                            </label>
+                        </div>
+                        <div className="h-full">
+                            <label className="form-control w-full h-full flex flex-col">
+                                <div className="label">
+                                    <span className="text-base font-semibold">Email *</span>
+                                </div>
+                                <input 
+                                type="email"
+                                className='input input-bordered w-full'
+                                required
+                                name='email'
+                                placeholder='Enter email'
+                                value={formData.email}
+                                onChange={handleChange}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div className='mt-4 flex w-auto gap-x-4 justify-center'>
+                    <label className="form-control w-full h-full flex flex-col">
+                        <div className="label">
+                        <span className="text-base font-semibold">Profile Picture</span>
+                        </div>
+                        <input 
+                        type="file" 
+                        className="file-input file-input-bordered file-input-info file-input-md w-full" 
+                        accept="image/jpeg, image/png, image/webp"
+                        onChange={handleImageUpload}
+                        disabled={isUploading}
+                        />
+                        {isUploading && (
+                        <span className="text-sm text-gray-500 mt-2">Uploading image...</span>
+                        )}
+                        {formData.profileImage.url && (
+                        <div className="mt-4 flex justify-center">
+                            <div className="avatar">
+                            <div className="w-24 rounded-full">
+                                <img 
+                                src={formData.profileImage.url} 
+                                alt="Profile preview" 
+                                className="object-cover"
+                                />
+                            </div>
+                            </div>
+                        </div>
+                        )}
+                    </label>
                     </div>
                 </div>
                 <div className='mt-5 p-5 rounded-xl border border-neutral-content flex flex-col bg-white'>
@@ -366,10 +480,32 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
                     </div>
                 </div>
                 <div className='grid gap-x-4 grid-cols-2 mt-4 justify-center'>
-                    <button className='btn btn-primary' type='submit'>
-                        <span className='text-white'>Save Student</span>
+                    <button 
+                        className='btn btn-primary' 
+                        type='submit'
+                        disabled={isUploading}
+                    >
+                        {isUploading ? (
+                            <>
+                                <span className="loading loading-spinner"></span>
+                                Uploading...
+                            </>
+                        ) : (
+                            <span className='text-white'>Save Student</span>
+                        )}
                     </button>
-                    <button className='btn' type="button" onClick={(e) => {e.preventDefault(); setFormData(initialFormState); setIsStudentFormOpen(false);}}>Cancel</button>
+                    <button 
+                        className='btn' 
+                        type="button" 
+                        onClick={(e) => {
+                            e.preventDefault(); 
+                            setFormData(initialFormState); 
+                            setIsStudentFormOpen(false);
+                        }}
+                        disabled={isUploading}
+                    >
+                        Cancel
+                    </button>
                 </div>
             </form>           
         </div>
