@@ -71,15 +71,14 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
     const file = e.target.files[0];
     if (!file) return;
 
-    // Validate file type and size
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!validTypes.includes(file.type)) {
-        toast.error('Only JPEG, PNG, or WEBP images allowed');
+    // Validate file
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+        toast.error('Only JPEG/PNG/WEBP images allowed');
         return;
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        toast.error('Image must be smaller than 5MB');
+    if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image must be <5MB');
         return;
     }
 
@@ -87,21 +86,16 @@ const StudentForm = ({isStudentFormOpen, setIsStudentFormOpen, handleSubmitStude
     try {
         const { url, key } = await uploadStudentImage(
         file,
-        formData.studentId || 'temp', // Use 'temp' if studentId not set yet
+        formData.studentId || 'temp', // Temp ID for new students
         formData.email
         );
 
         setFormData(prev => ({
         ...prev,
-        profileImage: {
-            url,
-            key
-        }
+        profileImage: { url, key } // Store both values
         }));
-        toast.success('Profile image uploaded successfully!');
     } catch (error) {
-        console.error("Upload error:", error);
-        toast.error(error.message || 'Failed to upload image');
+        toast.error(error.message);
     } finally {
         setIsUploading(false);
     }
