@@ -1,4 +1,6 @@
-import StudentModel from '../models/StudentModel.js'
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+import s3Client from "../config/s3Client.js";
+import StudentModel from "../models/StudentModel.js";
 
 export async function getAllStudent(_, res){
     try {
@@ -23,13 +25,62 @@ export async function getStudent(req, res){
     }
 }
 
-export async function createStudent(req, res){
+export async function createStudent(req, res) {
     try {
-        const createdStudent = await StudentModel.create(req.body);
-        res.status(201).json(createdStudent)
+        const { email, profileImage } = req.body;
+
+        // 1. Check for duplicate email
+        const existingStudent = await StudentModel.findOne({ email });
+        if (existingStudent) {
+            // Delete orphaned image if duplicate exists
+            if (profileImage?.key) {
+                await s3Client.send(new DeleteObjectCommand({
+                    Bucket: process.env.S3_BUCKET,
+                    Key: profileImage.key
+                }));
+            }
+            return res.status(409).json({ 
+                message: "Email already exists",
+                error: "DUPLICATE_EMAIL" 
+            });
+        }
+
+        // 2. Create student with proper image data structure
+        const createdStudent = await StudentModel.create({
+            ...req.body,
+            profileImage: profileImage ? {
+                url: profileImage.url,
+                key: profileImage.key
+            } : null
+        });
+
+        // 3. Return success response
+        res.status(201).json({
+            message: "Student created successfully",
+            student: createdStudent
+        });
+
     } catch (error) {
-        console.error("Error in createStudent controller", error)
-        res.status(500).json({message: "Internal server error"})
+        console.error("Error in createStudent controller:", error);
+
+        // Cleanup uploaded image if creation fails
+        if (req.body.profileImage?.key) {
+            try {
+                await s3Client.send(new DeleteObjectCommand({
+                    Bucket: process.env.S3_BUCKET,
+                    Key: req.body.profileImage.key
+                }));
+            } catch (s3Error) {
+                console.error("Failed to cleanup image:", s3Error);
+            }
+        }
+
+        // Error response
+        res.status(500).json({
+            message: "Internal server error",
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+            code: "INTERNAL_SERVER_ERROR"
+        });
     }
 }
 
