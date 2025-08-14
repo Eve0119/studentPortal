@@ -154,9 +154,16 @@ const StudentTable = ({
                   {currentItems.map((student) => (
                     <tr key={student._id} className="border-t last:border-b border-base-200 hover:bg-base-200">
                       <td className="flex items-center gap-2 md:gap-4 px-2 py-2">
-                        <div>
-                          <div className="font-bold text-primary text-base md:text-lg">{student.lastName}</div>
-                          <div className="text-xs md:text-sm text-black">{student.firstName + " " + student.middleInitial + "."}</div>
+                        <div className='flex gap-4'>
+                          <div className='avatar'>
+                            <div className="w-8 rounded-full">
+                              <img src={student.profileImage?.url || "https://academix-student-portal.s3.ap-southeast-2.amazonaws.com/default-profile/student-default-profile-male.webp"} />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold text-primary text-base md:text-lg">{student.lastName}</div>
+                            <div className="text-xs md:text-sm text-black">{student.firstName + " " + student.middleInitial + "."}</div>
+                          </div>
                         </div>
                       </td>
                       <td className="px-2 py-2 hidden sm:table-cell">
