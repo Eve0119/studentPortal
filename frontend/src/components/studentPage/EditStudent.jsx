@@ -26,6 +26,8 @@ const EditStudent = ({
     middleInitial: '',
     dateOfBirth: '',
     gender: '',
+    contactNumber: '',
+    email: '',
     grade: '',
     studentId: '',
     parentGuardianName: '',
@@ -37,6 +39,10 @@ const EditStudent = ({
       barangay: '',
       city: '',
       zip: ''
+    },
+    profileImage: {
+      url: '',
+      key: ''
     }
   });
 
@@ -266,6 +272,41 @@ const EditStudent = ({
                           name='studentId'
                           placeholder='Enter student number'
                           value={formData.studentId}
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4'>
+                    <div>
+                      <label className="form-control">
+                        <div className="label">
+                          <span className="label-text font-semibold">Contact Number *</span>
+                        </div>
+                        <input
+                          type="text"
+                          className='input input-bordered w-full'
+                          required
+                          name='contactNumber'
+                          placeholder='Enter contact number'
+                          value={formData.contactNumber}
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label className="form-control">
+                        <div className="label">
+                          <span className="label-text font-semibold">Email *</span>
+                        </div>
+                        <input
+                          type="email"
+                          className='input input-bordered w-full'
+                          required
+                          name='email'
+                          placeholder='Enter email address'
+                          value={formData.email}
                           onChange={handleChange}
                         />
                       </label>
