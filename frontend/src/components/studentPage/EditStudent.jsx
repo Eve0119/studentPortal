@@ -4,6 +4,7 @@ import { FaRegCalendar } from "react-icons/fa";
 import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { RiParentLine } from "react-icons/ri";
 import axiosInstance from '../../lib/axios';
+import { uploadStudentImage } from '../../lib/awsS3';
 
 const EditStudent = ({
   setStudent,
@@ -102,6 +103,42 @@ const EditStudent = ({
     }
   }, [isEditStudentOpen, studentId]);
 
+    const [isUploading, setIsUploading] = useState(false);
+
+    const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+        toast.error('Only JPEG/PNG/WEBP images allowed');
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image must be <5MB');
+        return;
+    }
+
+    setIsUploading(true);
+    try {
+        const { url, key } = await uploadStudentImage(
+        file,
+        formData.studentId || 'temp', // Temp ID for new students
+        formData.email
+        );
+
+        setFormData(prev => ({
+        ...prev,
+        profileImage: { url, key } // Store both values
+        }));
+    } catch (error) {
+        toast.error(error.message);
+    } finally {
+        setIsUploading(false);
+    }
+    };
+
   return (
     <div>
       <dialog ref={editStudentRef} className='modal modal-middle backdrop-blur-sm'>
@@ -154,6 +191,73 @@ const EditStudent = ({
                     </div>
                     <div>
                       <span className='text-neutral-content text-sm sm:text-base'>Basic information about the student</span>
+                    </div>
+                  </div>
+
+                  <div className='mt-4'>
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Circular profile picture with upload overlay */}
+                      <div className="relative group">
+                        <div className="avatar">
+                          <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            {formData.profileImage.url ? (
+                              <img 
+                                src={formData.profileImage.url} 
+                                alt="Profile preview" 
+                                className="object-cover"
+                              />
+                            ) : (
+                              <div className="bg-neutral-focus text-neutral-content w-full h-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M5 12h14M12 5v14"/>
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {/* Upload overlay */}
+                        <div className="absolute inset-0 rounded-full bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <label className="btn btn-sm btn-circle btn-ghost text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                              <polyline points="17 8 12 3 7 8"></polyline>
+                              <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept="image/jpeg, image/png, image/webp"
+                              onChange={handleImageUpload}
+                              disabled={isUploading}
+                            />
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Upload status and instructions */}
+                      <div className="text-center">
+                        <label className="btn btn-sm btn-outline btn-primary">
+                          Change Photo
+                          <input 
+                            type="file" 
+                            className="hidden" 
+                            accept="image/jpeg, image/png, image/webp"
+                            onChange={handleImageUpload}
+                            disabled={isUploading}
+                          />
+                        </label>
+                        <div className="mt-2 text-sm text-gray-500">
+                          {isUploading ? (
+                            <div className="flex items-center justify-center gap-2">
+                              <span className="loading loading-spinner loading-xs"></span>
+                              Uploading...
+                            </div>
+                          ) : (
+                            <span>JPG, PNG, or WEBP. Max 5MB</span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -490,8 +594,15 @@ const EditStudent = ({
 
                 {/* Action Buttons */}
                 <div className='grid grid-cols-2 gap-4 mt-4'>
-                  <button className='btn btn-primary' type='submit'>
-                    <span className='text-white'>Update Student</span>
+                  <button className='btn btn-primary' type='submit' disabled={isLoading || isUploading}>
+                        {isUploading || isLoading ? (
+                          <>
+                            <span className="loading loading-spinner"></span>
+                            Uploading...
+                          </>
+                        ) : (
+                          <span className='text-white'>Update Student</span>
+                        )}
                   </button>
                   <button
                     className='btn'
