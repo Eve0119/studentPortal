@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegEdit } from "react-icons/fa";
 import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
 import { HiOutlineAcademicCap } from "react-icons/hi2";
 import { RiParentLine } from "react-icons/ri";
 import axiosInstance from '../../lib/axios';
-import { capitalizeWords, getAge, formatDate} from '../../lib/utils';
+import { capitalizeWords, getAge, formatDate } from '../../lib/utils';
 import CopyButton from '../ui/CopyButton';
 
 const StudentProfile = ({
@@ -49,24 +49,23 @@ const StudentProfile = ({
     return (
         <div>
             <dialog ref={studentProfileRef} className="modal modal-middle backdrop-blur-sm">
-                <div className="modal-box !max-w-none !pt-0 w-[95vw] sm:w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[70vw] max-h-[90vh] sm:max-h-[95vh] overflow-y-auto">
-                    <div className="flex justify-between items-start sticky top-0 z-10 bg-base-100 pt-4 pb-2 -mx-4 px-4">
-                        <div className='flex justify-start flex-col'>
-                            <h2 className="text-xl md:text-2xl font-bold text-primary-content">
+                <div className="modal-box !max-w-none !pt-0 w-[95vw] sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] 2xl:w-[50vw] max-h-[90vh] sm:max-h-[95vh] overflow-y-auto rounded-lg">
+                    {/* Header */}
+                    <div className="flex justify-between items-center sticky top-0 z-10 bg-gradient-to-r from-primary to-primary-focus text-white pt-4 pb-4 px-6 -mx-6 rounded-t-lg shadow-md">
+                        <div className='flex flex-col'>
+                            <h2 className="text-xl md:text-2xl font-bold">
                                 Student Profile
                             </h2>
-                            <div>
-                                <p className="text-sm md:text-base">
-                                    {isLoading 
-                                        ? 'Loading student information...'
-                                        : student 
-                                            ? <span className='text-neutral-content'>Viewing {student.firstName} {student.lastName}'s profile</span>
-                                            : 'Student information not available'}
-                                </p>
-                            </div>
+                            <p className="text-sm md:text-base opacity-90">
+                                {isLoading 
+                                    ? 'Loading student information...'
+                                    : student 
+                                        ? `${student.firstName} ${student.lastName}'s profile`
+                                        : 'Student information not available'}
+                            </p>
                         </div>
                         <button 
-                            className="btn btn-sm btn-circle btn-ghost"
+                            className="btn btn-circle btn-ghost btn-sm text-primary hover:bg-white/20"
                             onClick={() => setIsStudentProfileOpen(false)}
                         >
                             ✕
@@ -74,199 +73,224 @@ const StudentProfile = ({
                     </div>
 
                     {isLoading ? (
-                        <div className="flex justify-center py-8">
-                            <span className="loading loading-spinner loading-lg"></span>
+                        <div className="flex justify-center items-center h-64">
+                            <span className="loading loading-spinner loading-lg text-primary"></span>
                         </div>
                     ) : error ? (
-                        <div className="alert alert-error mt-4">
-                            Failed to load student data
+                        <div className="alert alert-error mt-6 mx-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>Failed to load student data. Please try again.</span>
                         </div>
                     ) : student ? (
-                        <>
-                            <div className="mt-5 p-4 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                <div className='flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0'>
-                                    <div>
-                                        <div>
-                                            <span className='text-2xl sm:text-3xl font-extrabold text-primary-content'>{student.firstName} {student.lastName}</span>
-                                        </div>
-                                        <div>
-                                            <span className='text-lg sm:text-xl text-neutral'>{capitalizeWords(student.grade)}</span>
+                        <div className="space-y-6 px-4 py-6">
+                            {/* Profile Header with Image */}
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div className="relative group">
+                                    <div className="avatar">
+                                        <div className="w-24 sm:w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
+                                            {student.profileImage?.url ? (
+                                                <img 
+                                                    src={student.profileImage.url} 
+                                                    alt={`${student.firstName} ${student.lastName}`}
+                                                    className="object-cover"
+                                                />
+                                            ) : (
+                                                <div className="bg-neutral-focus text-neutral-content w-full h-full flex items-center justify-center text-4xl">
+                                                    {student.firstName.charAt(0)}{student.lastName.charAt(0)}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                    <div className='w-full sm:w-auto'>
-                                        <button onClick={()=>{
-                                            setIsStudentProfileOpen(false);
-                                            setIsEditStudentOpen(true);
-                                        }} className='btn btn-sm btn-outline rounded-lg border-neutral-content bg-primary hover:bg-accent hover:border-neutral-content text-white w-full sm:w-auto'>
+                                </div>
+                                
+                                <div className="flex-1">
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                        <div>
+                                            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                                                {student.firstName} {student.lastName}
+                                            </h1>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className="badge badge-primary badge-lg text-white">
+                                                    {capitalizeWords(student.grade)}
+                                                </span>
+                                                <span className="text-gray-600">
+                                                    {getAge(student.dateOfBirth)} years old
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button 
+                                            onClick={() => {
+                                                setIsStudentProfileOpen(false);
+                                                setIsEditStudentOpen(true);
+                                            }} 
+                                            className="btn btn-primary btn-sm sm:btn-md gap-2"
+                                        >
                                             <FaRegEdit />
-                                            Edit
+                                            Edit Profile
                                         </button>
                                     </div>
-                                </div>
-                                <div className='grid grid-cols-1 sm:grid-cols-9 mt-4 gap-2 sm:gap-0'>
-                                    <div className='sm:col-span-1'>
-                                        <span className='text-primary pr-2 font-medium'>Student ID:  </span>
-                                    </div>
-                                    <div className='sm:col-span-8 justify-start'>
-                                        <span className='text-base text-primary-content font-bold'> {student.studentId}</span>
-                                        <CopyButton textToCopy={student.studentId} />
-                                    </div>
-                                    <div className='sm:col-span-1'>
-                                        <span className='text-primary pr-2 font-medium'>Age: </span>
-                                    </div>
-                                    <div className='sm:col-span-8 justify-start'>
-                                        <span className='text-base text-primary-content font-bold'> {getAge(student.dateOfBirth)}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-5'>
-                                <div className="mt-5 p-4 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                    <div className='flex gap-2'>
-                                        <IoPersonOutline className='text-primary text-2xl mt-1'/>
-                                        <span className='text-xl sm:text-2xl text-primary-content font-semibold'>
-                                            Personal Information
-                                        </span>
-                                    </div>
-                                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 justify-start mt-5'>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>First Name</span>
+                                    
+                                    <div className="mt-4 grid grid-cols-2 gap-4">
+                                        <div className="flex items-center gap-2">
                                             <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.firstName}</span>
+                                                <p className="text-xs text-gray-500">Student ID</p>
+                                                <div className="flex items-center gap-2">
+                                                    <p className="font-semibold">{student.studentId}</p>
+                                                    <CopyButton textToCopy={student.studentId} />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm '>Last Name</span>
+                                        <div className="flex items-center gap-2">
                                             <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.lastName}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Date of Birth</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{formatDate(new Date(student.dateOfBirth))}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Gender</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.gender)}</span>
-                                            </div>
-                                        </div>
-                                        <div className='sm:col-span-2'>
-                                            <span className='text-neutral font-medium text-sm'>Contact Number</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.contactNumber || 'Not provided'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="p-4 mt-5 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                    <div className='flex gap-2'>
-                                        <HiOutlineAcademicCap className='text-primary text-2xl mt-1'/>
-                                        <span className='text-xl sm:text-2xl text-primary-content font-semibold'>
-                                            Academic Information
-                                        </span>
-                                    </div>
-                                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 justify-start mt-5'>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Grade Level</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.grade)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>General Average</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.grades?.generalAverage || 'No grades yet'}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Enrollment Date</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{formatDate(new Date(student.enrollmentDate))}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Attendance Rate</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.attendance?.attendanceRate || 'No attendance yet'}</span>
-                                            </div>
-                                        </div>
-                                        <div className='sm:col-span-2'>
-                                            <span className='text-neutral font-medium text-sm'>Adviser</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{student.adviser || 'No adviser yet'}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="p-4 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                    <div className='flex gap-2'>
-                                        <IoLocationOutline className='text-primary text-2xl mt-1'/>
-                                        <span className='text-xl sm:text-2xl text-primary-content font-semibold'>
-                                            Address
-                                        </span>
-                                    </div>
-                                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 justify-start mt-5'>
-                                        <div className='sm:col-span-2'>
-                                            <span className='text-neutral font-medium text-sm'>Street</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.address?.street)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Barangay</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.address?.barangay)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>City</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.address?.city)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>ZIP Code</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.address?.zip || 'Not provided')}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="p-4 sm:p-7 rounded-xl border border-neutral-content bg-white flex flex-col">
-                                    <div className='flex gap-2'>
-                                        <RiParentLine className='text-primary text-2xl mt-1'/>
-                                        <span className='text-xl sm:text-2xl text-primary-content font-semibold'>
-                                            Parent/Guardian
-                                        </span>
-                                    </div>
-                                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 justify-start mt-5'>
-                                        <div className='sm:col-span-2'>
-                                            <span className='text-neutral font-medium text-sm'>Name</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.parentGuardianName)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Contact Number</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.parentContactNumber)}</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span className='text-neutral font-medium text-sm'>Email</span>
-                                            <div>
-                                                <span className='text-primary-content text-base sm:text-lg font-bold'>{capitalizeWords(student.parentEmail || 'Not provided')}</span>
+                                                <p className="text-xs text-gray-500">Email</p>
+                                                <p className="font-semibold">{student.email || 'Not provided'}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </>
+
+                            {/* Grid Sections */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                {/* Personal Information */}
+                                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <IoPersonOutline className="text-2xl text-primary" />
+                                        <h3 className="text-xl font-semibold text-gray-800">Personal Information</h3>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-sm text-gray-500">First Name</p>
+                                                <p className="font-medium">{student.firstName}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-500">Last Name</p>
+                                                <p className="font-medium">{student.lastName}</p>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Date of Birth</p>
+                                                    <p className="font-medium">{formatDate(new Date(student.dateOfBirth))}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Gender</p>
+                                                    <p className="font-medium">{capitalizeWords(student.gender)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div>
+                                                <p className="text-sm text-gray-500">Contact Number</p>
+                                                <p className="font-medium">{student.contactNumber || 'Not provided'}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Academic Information */}
+                                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <HiOutlineAcademicCap className="text-2xl text-primary" />
+                                        <h3 className="text-xl font-semibold text-gray-800">Academic Information</h3>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-sm text-gray-500">Grade Level</p>
+                                                <p className="font-medium">{capitalizeWords(student.grade)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-500">General Average</p>
+                                                <p className="font-medium">{student.grades?.generalAverage || 'No grades yet'}</p>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-sm text-gray-500">Enrollment Date</p>
+                                                <p className="font-medium">{formatDate(new Date(student.enrollmentDate))}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-500">Attendance Rate</p>
+                                                <p className="font-medium">{student.attendance?.attendanceRate || 'No attendance yet'}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-500">Adviser</p>
+                                            <p className="font-medium">{student.adviser || 'No adviser yet'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Address Information */}
+                                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <IoLocationOutline className="text-2xl text-primary" />
+                                        <h3 className="text-xl font-semibold text-gray-800">Address</h3>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm text-gray-500">Street</p>
+                                            <p className="font-medium">{capitalizeWords(student.address?.street)}</p>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-sm text-gray-500">Barangay</p>
+                                                <p className="font-medium">{capitalizeWords(student.address?.barangay)}</p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-500">City</p>
+                                                <p className="font-medium">{capitalizeWords(student.address?.city)}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-500">ZIP Code</p>
+                                            <p className="font-medium">{student.address?.zip || 'Not provided'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Parent/Guardian Information */}
+                                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <RiParentLine className="text-2xl text-primary" />
+                                        <h3 className="text-xl font-semibold text-gray-800">Parent/Guardian</h3>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm text-gray-500">Name</p>
+                                            <p className="font-medium">{capitalizeWords(student.parentGuardianName)}</p>
+                                        </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Contact Number</p>
+                                                    <p className="font-medium">{student.parentContactNumber}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Email</p>
+                                                    <p className="font-medium">{student.parentEmail || 'Not provided'}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ) : (
-                        <div className="mt-4 text-center">
-                            No student data found
+                        <div className="flex flex-col items-center justify-center py-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p className="mt-4 text-lg font-medium text-gray-600">No student data found</p>
                         </div>
                     )}
                 </div>
