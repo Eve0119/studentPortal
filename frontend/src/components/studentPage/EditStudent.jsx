@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { FaRegEdit, FaRegCalendar } from "react-icons/fa";
+import { FaRegCalendar } from "react-icons/fa";
 import { IoPersonOutline, IoLocationOutline } from "react-icons/io5";
-import { HiOutlineAcademicCap } from "react-icons/hi2";
 import { RiParentLine } from "react-icons/ri";
 import axiosInstance from '../../lib/axios';
-import { capitalizeWords, getAge, formatDate } from '../../lib/utils';
-import CopyButton from '../ui/CopyButton';
 
 const EditStudent = ({
   setStudent,
