@@ -84,30 +84,72 @@ export async function createStudent(req, res) {
     }
 }
 
-export async function updateStudent(req, res){
+export async function updateStudent(req, res) {
     try {
-        const updatedStudent = await StudentModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
-        if(!updatedStudent){
-            return res.status(404).json({message: "Student not found"})
-        } else{
-            res.status(200).json(updatedStudent)
+        const { id } = req.params;
+        const { profileImage } = req.body;
+
+        // 1. Get the existing student data
+        const existingStudent = await StudentModel.findById(id);
+        if (!existingStudent) {
+            return res.status(404).json({ message: "Student not found" });
         }
+
+        // 2. If updating profile image, delete the old one
+        if (profileImage?.key && existingStudent.profileImage?.key) {
+            try {
+                await s3Client.send(new DeleteObjectCommand({
+                    Bucket: process.env.S3_BUCKET,
+                    Key: existingStudent.profileImage.key
+                }));
+            } catch (s3Error) {
+                console.error("Failed to delete old image:", s3Error);
+                // Continue with update even if deletion fails
+            }
+        }
+
+        // 3. Perform the update
+        const updatedStudent = await StudentModel.findByIdAndUpdate(
+            id,
+            {
+                ...req.body,
+                profileImage: profileImage ? {
+                    url: profileImage.url,
+                    key: profileImage.key
+                } : existingStudent.profileImage
+            },
+            { new: true }
+        );
+
+        res.status(200).json(updatedStudent);
     } catch (error) {
-        console.error("Error in updateStudent controller", error)
-        res.status(500).json({message: "Internal server error"})
+        console.error("Error in updateStudent controller", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
-export async function deleteStudent(req, res){
+export async function deleteStudent(req, res) {
     try {
-        const deleteStudent = await StudentModel.findByIdAndDelete(req.params.id)
-        if(!deletedStudent){
-            return res.status(404).json({message: "Student not found"})
-        } else{
-            res.status(200).json({message:'Deleted Successfully'})
+        const student = await StudentModel.findByIdAndDelete(req.params.id);
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
         }
+
+        // Delete associated profile image if exists
+        if (student.profileImage?.key) {
+            try {
+                await s3Client.send(new DeleteObjectCommand({
+                    Bucket: process.env.S3_BUCKET,
+                    Key: student.profileImage.key
+                }));
+            } catch (s3Error) {
+                console.error("Failed to delete image:", s3Error);
+            }
+        }
+
+        res.status(200).json({ message: 'Deleted successfully' });
     } catch (error) {
-        console.error("Error in deleteStudent controller", error)
-        res.status(500).json({message: "Internal server error"})
+        console.error("Error in deleteStudent controller", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
