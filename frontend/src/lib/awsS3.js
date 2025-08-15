@@ -11,11 +11,12 @@ const s3Client = new S3Client({
 
 export const uploadStudentImage = async (file, studentId, email) => {
     try {
-        const timestamp = Date.now();
+        // Use consistent prefix but with versioning
         const emailHash = MD5(email).toString().slice(0, 8);
         const fileExt = file.name.split('.').pop().toLowerCase();
-        const filename = `student-${studentId}-${emailHash}-${timestamp}.${fileExt}`;
+        const filename = `student-${studentId}-${emailHash}.${fileExt}`;
         const folder = 'student-profile-images';
+        const version = Date.now(); // For cache busting
 
         const fileBuffer = await file.arrayBuffer();
 
@@ -29,7 +30,7 @@ export const uploadStudentImage = async (file, studentId, email) => {
         await s3Client.send(new PutObjectCommand(params));
 
         return {
-            url: `https://${params.Bucket}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/${params.Key}?t=${timestamp}`,
+            url: `https://${params.Bucket}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/${params.Key}?v=${version}`,
             key: params.Key
         };
     } catch (err) {
