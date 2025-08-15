@@ -125,7 +125,7 @@ const StudentProfile = ({
                                                 setIsStudentProfileOpen(false);
                                                 setIsEditStudentOpen(true);
                                             }} 
-                                            className="btn btn-primary btn-sm sm:btn-md gap-2"
+                                            className="btn btn-primary btn-sm sm:btn-md gap-2 text-white"
                                         >
                                             <FaRegEdit />
                                             Edit Profile
