@@ -21,7 +21,8 @@ export async function getStudent(req, res){
             res.status(200).json(student)
         }
     } catch (error) {
-        
+        console.error("Error in getStudent controller", error)
+        res.status(500).json({message: "Internal server error"})
     }
 }
 
