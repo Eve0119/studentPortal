@@ -28,11 +28,19 @@ export async function getTeacher(req, res) {
 }
 
 export async function createTeacher(req, res) {
-    const { email, ...rest } = req.body;
+    const { email, profileImage, ...rest } = req.body;
     
     // 1. Fast MongoDB check first (indexed query)
     const existingTeacher = await TeacherModel.findOne({ email }).select('_id').lean();
     if (existingTeacher) {
+
+        if (profileImage?.key) {
+            // Delete orphaned image if duplicate exists
+            await s3Client.send(new DeleteObjectCommand({
+                Bucket: process.env.S3_BUCKET,
+                Key: profileImage.key
+            }));
+        }
         return res.status(409).json({ 
             error: {
                 code: 'EMAIL_EXISTS',
@@ -56,6 +64,10 @@ export async function createTeacher(req, res) {
             TeacherModel.create({
                 email,
                 firebaseUid: userRecord.uid,
+                profileImage: profileImage ? {
+                    url: profileImage.url,
+                    key: profileImage.key
+                } : null,
                 ...rest
             }),
             adminAuth.setCustomUserClaims(userRecord.uid, { role: "teacher" })
@@ -83,6 +95,18 @@ export async function createTeacher(req, res) {
                     message: 'Email already registered'
                 }
             });
+        }
+
+        if (profileImage?.key) {
+            // Cleanup uploaded image if creation fails
+            try {
+                await s3Client.send(new DeleteObjectCommand({
+                    Bucket: process.env.S3_BUCKET,
+                    Key: profileImage.key
+                }));
+            } catch (s3Error) {
+                console.error("Failed to cleanup image:", s3Error);
+            }
         }
 
         return res.status(500).json({ 
