@@ -45,6 +45,10 @@ const teacherSchema = new mongoose.Schema({
     dateHired: {
         type: Date, required: true
     },
+    profileImage: {
+        url: { type: String, required: false },
+        key: { type: String, required: false }
+    }
 })
 
 const TeacherModel = mongoose.model('Teacher', teacherSchema);
